@@ -1,0 +1,14 @@
+{
+    "name": "wp4laravel/wp4laravel",
+    "description": "Laravel with Wordpress as CMS",
+    "type": "laravel-package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "IN10dev",
+            "email": "development@in10.nl"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
