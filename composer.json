@@ -14,7 +14,7 @@
 		   "WP4Laravel\\": "src"
 		}
    },
-   "minimum-stability": "dev",
+   "minimum-stability": "stable",
 	"repositories": [
 		{
              "type": "vcs",
