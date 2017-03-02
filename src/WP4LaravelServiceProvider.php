@@ -3,7 +3,7 @@
 namespace WP4Laravel;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\View\View;
+use View;
 
 class WP4LaravelServiceProvider extends ServiceProvider
 {
