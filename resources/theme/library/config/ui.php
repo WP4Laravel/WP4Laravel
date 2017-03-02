@@ -15,7 +15,7 @@
 /*
  * Remove menu items.
  */
-add_theme_support('laravel-menu', [
+add_theme_support('wp4laravel-menu', [
    'comments',
    'links',
    'tools',
@@ -25,7 +25,7 @@ add_theme_support('laravel-menu', [
 /*
  * Remove meta boxes in post editor.
  */
-add_theme_support('laravel-editor', [
+add_theme_support('wp4laravel-editor', [
     'commentsdiv',
     'commentstatusdiv',
     'linkadvanceddiv',
@@ -43,7 +43,7 @@ add_theme_support('laravel-editor', [
 /*
  * Remove dashboard widgets.
  */
-add_theme_support('laravel-dashboard', [
+add_theme_support('wp4laravel-dashboard', [
     'dashboard_activity',
     'dashboard_incoming_links',
     'dashboard_plugins',
@@ -58,7 +58,7 @@ add_theme_support('laravel-dashboard', [
 /*
  * Remove links from admin toolbar.
  */
-add_theme_support('laravel-toolbar', [
+add_theme_support('wp4laravel-toolbar', [
     'comments',
     'wp-logo',
     'edit',
@@ -72,17 +72,17 @@ add_theme_support('laravel-toolbar', [
 /*
  * Remove dashboard tabs.
  */
-add_theme_support('laravel-tabs', ['help']);
+add_theme_support('wp4laravel-tabs', ['help']);
 
 /*
  * Set custom login logo.
  */
-add_theme_support('laravel-login', sprintf('%s/%s', get_template_directory_uri(), '/screenshot.png'));
+add_theme_support('wp4laravel-login', sprintf('%s/%s', get_template_directory_uri(), '/screenshot.png'));
 
 /*
  * Set custom footer text.
  */
-add_theme_support('laravel-footer', 'Thank you for using Wordpress with Laravel');
+add_theme_support('wp4laravel-footer', 'Thank you for using Wordpress with Laravel');
 
 /*
  * Set theme defaults.
@@ -111,7 +111,7 @@ add_action('after_setup_theme', function () {
     ]);
 
     // Add primary WordPress menu.
-    register_nav_menu('primary-menu', __('Primary Menu', 'laravel'));
+    register_nav_menu('primary-menu', __('Primary Menu', 'wp4laravel'));
 });
 
 
