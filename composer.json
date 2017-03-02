@@ -16,10 +16,6 @@
    },
    "minimum-stability": "stable",
 	"repositories": [
-		{
-             "type": "vcs",
-             "url": "https://github.com/wp4laravel/acf"
-         },
   	     {
               "type": "vcs",
               "url": "https://github.com/wp4laravel/corcel"
@@ -28,7 +24,6 @@
     "require": {
 		"composer/installers": "^1.2",
 		"johnpbloch/wordpress": "^4.7",
-		"corcel/acf": "dev-master",
         "jgrossi/corcel": "dev-master"
 	}
 }
