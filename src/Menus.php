@@ -1,6 +1,6 @@
 <?php
 
-namespace WP4Laravel\Menus;
+namespace WP4Laravel;
 
 use Corcel\Menu;
 use Illuminate\Support\Collection;
