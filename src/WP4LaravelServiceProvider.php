@@ -14,8 +14,8 @@ class WP4LaravelServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'../resources/theme' => public_path('themes/wp4laravel'),
-            __DIR__.'../resources/wp-config.php' => public_path('wp-config.php'),
+            __DIR__.'/../resources/theme' => public_path('themes/wp4laravel'),
+            __DIR__.'/../resources/wp-config.php' => public_path('wp-config.php'),
         ], 'public');
     }
 
