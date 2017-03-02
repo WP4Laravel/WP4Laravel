@@ -13,9 +13,17 @@ class WP4LaravelServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        View::share('site', $this->app->make('site'));
+
+
+        $this->mergeConfigFrom(
+            __DIR__.'/../resources/config/site.php', 'site'
+        );
+
         $this->publishes([
             __DIR__.'/../resources/theme' => public_path('themes/wp4laravel'),
             __DIR__.'/../resources/wp-config.php' => public_path('wp-config.php'),
+            __DIR__.'/../resources/config/site.php' => config_path('site.php'),
         ], 'public');
     }
 
@@ -26,6 +34,8 @@ class WP4LaravelServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('site', function ($app) {
+            return new Site();
+        });
     }
 }
