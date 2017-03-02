@@ -14,16 +14,6 @@
 		   "WP4Laravel\\": "src"
 		}
    },
-   "minimum-stability": "stable",
-	"repositories": [
-  	     {
-              "type": "vcs",
-              "url": "https://github.com/wp4laravel/corcel"
-          }
-	],
-    "require": {
-		"composer/installers": "^1.2",
-		"johnpbloch/wordpress": "^4.7",
-        "jgrossi/corcel": "dev-master"
-	}
+   "minimum-stability": "dev",
+
 }
