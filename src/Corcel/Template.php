@@ -2,7 +2,7 @@
 
 namespace WP4Laravel\Corcel;
 
-trait TemplateTrait
+trait Template
 {
     /**
      * Get the path to the blade template based on

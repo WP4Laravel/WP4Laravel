@@ -1,6 +1,6 @@
 <?php
 
-namespace WP4Laravel\Corcel\Pageurl;
+namespace WP4Laravel\Corcel;
 
 trait Pageurl
 {
