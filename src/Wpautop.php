@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace WP4Laravel;
 
 class Wpautop
 {
