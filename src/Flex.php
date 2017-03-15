@@ -2,7 +2,7 @@
 
 namespace WP4Laravel;
 
-use Corcel\Post;
+use Corcel\Model;
 use View;
 use WP4Laravel\Cache\CachePost;
 
@@ -28,10 +28,10 @@ class Flex
 
     /**
      * Initializing the Flex library
-     * @param Post   $post
+     * @param Model   $post
      * @param string $field
      */
-    public function __construct(Post $post, $field)
+    public function __construct(Model $post, $field)
     {
         //	Save the post as an object variable
         $this->post = $post;
