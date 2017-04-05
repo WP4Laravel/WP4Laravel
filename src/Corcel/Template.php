@@ -2,6 +2,8 @@
 
 namespace WP4Laravel\Corcel;
 
+use View;
+
 trait Template
 {
     /**
@@ -12,22 +14,24 @@ trait Template
 
     public function getTemplateAttribute()
     {
-        //	Make a collection with one item,
-        //	the current post type
-        $set = collect([$this->postType]);
+        $options = collect([
+            $this->post_type.'.show',
+            'post.show',
+        ]);
 
         //	Check if the meta data where the
         //	defined template is saved
         //	if not, use the default template
-        if (!$this->meta->_wp_page_template) {
-            $set->push("default");
-        } else {
-            $set->push($this->meta->_wp_page_template);
+        if ($this->meta->_wp_page_template) {
+            $options->prepend($this->post_type.".".$this->meta->_wp_page_template);
         }
 
-        //	TODO: Also check if the default exists.
+        foreach ($options as $item) {
+            if (View::exists($item)) {
+                return $item;
+            }
+        }
 
-        //	Join the array determined by dots (blade syntax)
-        return $set->implode(".");
+        return null;
     }
 }
