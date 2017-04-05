@@ -24,7 +24,11 @@ class Site
 
         return $this;
     }
-
+    
+    public function wpautop($value)
+    {
+        return Wpautop::format($value);
+    }
 
     public function get($key, $default='')
     {
