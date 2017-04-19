@@ -42,7 +42,7 @@ trait Seo
         }
 
         return collect([
-            'keywords' => $this->meta->getAttribute('_yoast_wpseo_focuskw') ?: '',
+            'keywords' => $data['_yoast_wpseo_focuskw'] ?? '',
             'title' => $data['wpseo_title'] ?? $this->title,
             'description' => $data['wpseo_title'] ?? $this->description,
             'metakeywords' =>  '',
