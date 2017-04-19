@@ -168,6 +168,10 @@ class Wpautop
             $pee = str_replace(array( ' <!-- wpnl --> ', '<!-- wpnl -->' ), "\n", $pee);
         }
 
+        $pee =  preg_replace_callback('~<table.*?</table>~is', function ($match) {
+            return '<div class="table-wrap">' . $match[0] . '</div>';
+        }, $pee);
+
         return $pee;
     }
 
