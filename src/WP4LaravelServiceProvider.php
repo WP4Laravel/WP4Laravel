@@ -4,6 +4,7 @@ namespace WP4Laravel;
 
 use Illuminate\Support\ServiceProvider;
 use View;
+use WP4Laravel\Corcel\Picture;
 
 class WP4LaravelServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,8 @@ class WP4LaravelServiceProvider extends ServiceProvider
             __DIR__.'/../resources/config/site.php' => config_path('site.php'),
             __DIR__.'/../resources/config/picture.php' => config_path('site.php'),
         ], 'public');
+
+        View::composer('partials/picture', Picture::class);
 
         View::share('site', $this->app->make('site'));
     }
