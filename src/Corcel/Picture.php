@@ -13,7 +13,7 @@ class Picture
 
     public function __construct()
     {
-        $storage = config('picture.uploads_path', '');
+        $this->storage = config('picture.uploads_path', '');
     }
 
     /**
