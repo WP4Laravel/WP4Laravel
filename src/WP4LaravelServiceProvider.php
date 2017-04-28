@@ -25,7 +25,8 @@ class WP4LaravelServiceProvider extends ServiceProvider
             __DIR__.'/../resources/config/picture.php' => config_path('site.php'),
         ], 'public');
 
-        View::composer('partials/picture', Picture::class);
+        $this->loadViewsFrom(__DIR__.'/../resources/views/', 'wp4laravel');
+        View::composer('wp4laravel::picture', Picture::class);
 
         View::share('site', $this->app->make('site'));
     }
