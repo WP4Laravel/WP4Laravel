@@ -26,17 +26,18 @@ trait Pageurl
 
         //	Filter al found pages with the same slug
         $selected = $pages->filter(function ($page) use ($segments) {
+
             //	The current page has no parent
             //	and there are not anymore segments
             //	So the requested page, has to be this one
-            if (!$page->parent && !$segments->count()) {
+            if (!$page->post_parent && !$segments->count()) {
                 return true;
             }
 
             //	The current page has a parent,
             //	but there not anymore segments
             //	So it cannot be this page
-            if ($page->parent && !$segments->count()) {
+            if ($page->post_parent && !$segments->count()) {
                 return false;
             }
 
@@ -45,6 +46,7 @@ trait Pageurl
 
             //	Loop through the remaining url segments
             foreach ($segments as $segment) {
+
                 //	Set the current to the parent of the page
                 $current = $current->parent;
 
@@ -66,7 +68,6 @@ trait Pageurl
             //	No page foun
             return false;
         });
-
         //	Return the first item of the filtered collection
         if ($return = $selected->first()) {
             return $return;
