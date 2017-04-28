@@ -11,5 +11,5 @@ return [
      *
      * Add a leading and trailing slash.
      */
-    'uploads_path' => public_path() . '/storage/',
+    'uploads_path' => '/storage/',
 ];
