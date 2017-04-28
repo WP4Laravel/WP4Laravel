@@ -25,7 +25,7 @@ class WP4LaravelServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../resources/config/site.php' => config_path('site.php'),
-            __DIR__.'/../resources/config/picture.php' => config_path('site.php'),
+            __DIR__.'/../resources/config/picture.php' => config_path('picture.php'),
         ], 'config');
 
         $this->loadViewsFrom(__DIR__.'/../resources/views/', 'wp4laravel');
