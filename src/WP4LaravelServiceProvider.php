@@ -44,5 +44,9 @@ class WP4LaravelServiceProvider extends ServiceProvider
         $this->app->singleton('site', function ($app) {
             return new Site();
         });
+
+        $this->commands([
+            \WP4Laravel\Commands\WPURLReplace::class
+        ]);
     }
 }
