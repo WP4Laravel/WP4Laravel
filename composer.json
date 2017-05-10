@@ -14,5 +14,8 @@
 		   "WP4Laravel\\": "src"
 		}
    },
-   "minimum-stability": "dev"
+   "minimum-stability": "dev",
+    "require": {
+        "illuminate/database": "^5.4.19"
+    }
 }
