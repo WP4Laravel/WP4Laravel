@@ -9,12 +9,12 @@
             "email": "development@in10.nl"
         }
     ],
-	"autoload": {
-	   "psr-4": {
-		   "WP4Laravel\\": "src"
-		}
-   },
-   "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "WP4Laravel\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
     "require": {
         "illuminate/database": "^5.4.19"
     }
