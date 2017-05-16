@@ -24,10 +24,15 @@ class Site
 
         return $this;
     }
-    
+
     public function wpautop($value)
     {
         return Wpautop::format($value);
+    }
+    
+    public function s3($media)
+    {
+        return S3Media::handle($media);
     }
 
     public function get($key, $default='')
