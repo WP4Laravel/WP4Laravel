@@ -22,6 +22,23 @@ class MenuBuilder
     private $menu;
 
     /**
+     * Render menu items as array based on the menu slug
+     * @param  string $slug
+     * @return Collection
+     */
+    public static function all()
+    {
+        $menus = CorcelMenu::all();
+        $return = [];
+
+        $menus->each(function ($item) use (&$return) {
+            $return[$item->slug] = (new static())->itemsIn($item);
+        });
+
+        return $return;
+    }
+
+    /**
      * Construct the utility class
      * @param string       $slug    slug of the menu
      * @param Request|null $request current request to highlight items
@@ -48,16 +65,18 @@ class MenuBuilder
 
         $rootItems = $this->menu->nav_items->filter(function ($item) {
             return $item->meta->_menu_item_menu_item_parent == '0';
-        });
+        })->map(function ($item) {
+            $formatted = $this->format($item);
 
-        foreach ($rootItems as $root) {
-            $root->children = collect();
-            foreach ($this->childrenOf($root) as $child) {
-                $root->children->push($this->format($child));
+            $formatted->children = collect();
+            foreach ($this->childrenOf($item) as $child) {
+                $formatted->children->push($this->format($child));
             }
 
-            $root->childActive = ($root->children->filter->active->count() > 0);
-        }
+            $formatted->childActive = ($formatted->children->filter->active->count() > 0);
+
+            return $formatted;
+        });
 
         return $rootItems;
     }
