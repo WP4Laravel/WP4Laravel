@@ -16,6 +16,7 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "illuminate/database": "^5.4.19"
+        "illuminate/database": "^5.4.19",
+        "jgrossi/corcel": "^1.4.4"
     }
 }
