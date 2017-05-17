@@ -107,7 +107,8 @@ class MenuBuilder
         }
 
         // Add a leading slash if required
-        if ($result->url !== '#' && substr($result->url, 0, 1) !== '/') {
+        $firstChar = substr($result->url, 0, 1);
+        if (!in_array($firstChar, ['/', '#'])) {
             $result->url = '/' . $result->url;
         }
 
