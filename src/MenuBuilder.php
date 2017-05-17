@@ -19,25 +19,6 @@ class MenuBuilder
      */
     private $request;
 
-    private $menu;
-
-    /**
-     * Render menu items as array based on the menu slug
-     * @param  string $slug
-     * @return Collection
-     */
-    public static function all()
-    {
-        $menus = CorcelMenu::all();
-        $return = [];
-
-        $menus->each(function ($item) use (&$return) {
-            $return[$item->slug] = (new static())->itemsIn($item);
-        });
-
-        return $return;
-    }
-
     /**
      * Construct the utility class
      * @param string       $slug    slug of the menu
@@ -46,6 +27,17 @@ class MenuBuilder
     public function __construct(Request $request = null)
     {
         $this->request = $request;
+    }
+
+    /**
+     * Returns a keyed set of all menu's
+     * @return Collection
+     */
+    public function all() : Collection
+    {
+        return CorcelMenu::all()->mapWithKeys(function ($menu) {
+            return [$menu->slug => $this->itemsIn($menu)];
+        });
     }
 
     /**
@@ -61,15 +53,14 @@ class MenuBuilder
         if (!$menu) {
             throw new InvalidArgumentException('Invalid or non-existent menu');
         }
-        $this->menu = $menu;
 
-        $rootItems = $this->menu->nav_items->filter(function ($item) {
+        $rootItems = $menu->nav_items->filter(function ($item) {
             return $item->meta->_menu_item_menu_item_parent == '0';
-        })->map(function ($item) {
+        })->map(function ($item) use ($menu) {
             $formatted = $this->format($item);
 
             $formatted->children = collect();
-            foreach ($this->childrenOf($item) as $child) {
+            foreach ($this->childrenOf($item, $menu) as $child) {
                 $formatted->children->push($this->format($child));
             }
 
@@ -87,9 +78,9 @@ class MenuBuilder
      * @param  mixed        $parentID id of the parent, optional
      * @return Collection
      */
-    private function childrenOf(Post $item) : Collection
+    private function childrenOf(Post $item, CorcelMenu $menu) : Collection
     {
-        return $this->menu->nav_items->filter(function ($candidate) use ($item) {
+        return $menu->nav_items->filter(function ($candidate) use ($item) {
             return $candidate->meta->_menu_item_menu_item_parent == $item->ID;
         });
     }
