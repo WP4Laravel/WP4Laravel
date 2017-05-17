@@ -19,8 +19,6 @@ class MenuBuilder
      */
     private $request;
 
-    private $menu;
-
     /**
      * Construct the utility class
      * @param string       $slug    slug of the menu
@@ -29,6 +27,17 @@ class MenuBuilder
     public function __construct(Request $request = null)
     {
         $this->request = $request;
+    }
+
+    /**
+     * Returns a keyed set of all menu's
+     * @return Collection
+     */
+    public function all() : Collection
+    {
+        return CorcelMenu::all()->mapWithKeys(function ($menu) {
+            return [$menu->slug => $this->itemsIn($menu)];
+        });
     }
 
     /**
@@ -44,20 +53,21 @@ class MenuBuilder
         if (!$menu) {
             throw new InvalidArgumentException('Invalid or non-existent menu');
         }
-        $this->menu = $menu;
 
-        $rootItems = $this->menu->nav_items->filter(function ($item) {
+        $rootItems = $menu->nav_items->filter(function ($item) {
             return $item->meta->_menu_item_menu_item_parent == '0';
-        });
+        })->map(function ($item) use ($menu) {
+            $formatted = $this->format($item);
 
-        foreach ($rootItems as $root) {
-            $root->children = collect();
-            foreach ($this->childrenOf($root) as $child) {
-                $root->children->push($this->format($child));
+            $formatted->children = collect();
+            foreach ($this->childrenOf($item, $menu) as $child) {
+                $formatted->children->push($this->format($child));
             }
 
-            $root->childActive = ($root->children->filter->active->count() > 0);
-        }
+            $formatted->childActive = ($formatted->children->filter->active->count() > 0);
+
+            return $formatted;
+        });
 
         return $rootItems;
     }
@@ -68,9 +78,9 @@ class MenuBuilder
      * @param  mixed        $parentID id of the parent, optional
      * @return Collection
      */
-    private function childrenOf(Post $item) : Collection
+    private function childrenOf(Post $item, CorcelMenu $menu) : Collection
     {
-        return $this->menu->nav_items->filter(function ($candidate) use ($item) {
+        return $menu->nav_items->filter(function ($candidate) use ($item) {
             return $candidate->meta->_menu_item_menu_item_parent == $item->ID;
         });
     }

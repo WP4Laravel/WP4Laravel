@@ -45,6 +45,8 @@ class WP4LaravelServiceProvider extends ServiceProvider
             return new Site();
         });
 
+        $this->app->singleton('wp4laravel::menubuilder', \WP4Laravel\MenuBuilder::class);
+
         $this->commands([
             \WP4Laravel\Commands\WPURLReplace::class
         ]);
