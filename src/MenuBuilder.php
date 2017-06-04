@@ -103,7 +103,7 @@ class MenuBuilder
             if (!$post) {
                 throw new Exception('Got menu item that is neither a post nor custom URL');
             }
-            $result->url = $post->slug;
+            $result->url = !empty($post->url) ? $post->url : $post->slug;
         }
 
         // Add a leading slash if required
