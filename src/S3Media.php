@@ -11,6 +11,7 @@ namespace WP4Laravel;
 
 use Illuminate\Support\Facades\Storage;
 use Corcel\Acf\Field\Image;
+use Corcel\Acf\Field\File;
 use Corcel\ThumbnailMeta;
 
 class S3Media
@@ -48,6 +49,7 @@ class S3Media
         //	Check if the given media object is an instance of
         //	Image (corcel/acf) or ThumbnailMeta (corcel/corcel)
         if ($media instanceof Image
+            || $media instanceof File
             || $media instanceof ThumbnailMeta) {
             $this->s3info = $this->media->attachment->meta->amazonS3_info;
         }
