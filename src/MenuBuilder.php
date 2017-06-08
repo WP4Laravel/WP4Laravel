@@ -107,13 +107,11 @@ class MenuBuilder
         }
 
         // Add a leading slash if required
-        $firstChar = substr($result->url, 0, 1);
-        if (!in_array($firstChar, ['/', '#'])) {
-            $result->url = '/' . $result->url;
-        }
+        $result->url = $this->ensureLeadingSlash($result->url);
 
         // Set active flag if this is the current page
-        $result->active = ($this->request && '/'.$this->request->path() === $result->url);
+        $currentPath = $this->ensureLeadingSlash($this->request->path());
+        $result->active = ($this->request && $currentPath === $result->url);
 
         // Use this link's title, or fallback to the post title
         $result->title = $item->post_title;
@@ -127,5 +125,21 @@ class MenuBuilder
         }
 
         return $result;
+    }
+
+    /**
+     * Add a leading slash to normalize an URL
+     * unless the URL starts with a / or an #
+     * @param  string $path valid path segment
+     * @return string
+     */
+    private function ensureLeadingSlash(string $path)
+    {
+        $firstChar = substr($path, 0, 1);
+        if (in_array($firstChar, ['/', '#'])) {
+            return $path;
+        } else {
+            return '/' . $path;
+        }
     }
 }
