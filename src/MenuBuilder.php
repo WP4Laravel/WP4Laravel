@@ -106,12 +106,10 @@ class MenuBuilder
             $result->url = !empty($post->url) ? $post->url : $post->slug;
         }
 
-        // Add a leading slash if required
-        $result->url = $this->ensureLeadingSlash($result->url);
-
         // Set active flag if this is the current page
         $currentPath = $this->ensureLeadingSlash($this->request->path());
-        $result->active = ($this->request && $currentPath === $result->url);
+        $menuPath = $this->ensureLeadingSlash($result->url);
+        $result->active = ($currentPath === $menuPath);
 
         // Use this link's title, or fallback to the post title
         $result->title = $item->post_title;
