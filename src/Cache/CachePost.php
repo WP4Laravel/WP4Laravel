@@ -103,7 +103,7 @@ class CachePost extends CacheContent
      */
     protected function getCacheKey($subkey)
     {
-        return $this->post->postType."_".$this->post->ID."_".$subkey;
+        return config('database.connections.wordpress.prefix').$this->post->post_type."_".$this->post->ID."_".$subkey;
     }
 
     /**
