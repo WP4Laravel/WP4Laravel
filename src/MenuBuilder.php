@@ -54,13 +54,18 @@ class MenuBuilder
             throw new InvalidArgumentException('Invalid or non-existent menu');
         }
 
-        $rootItems = $menu->nav_items->filter(function ($item) {
+        // Get all menu items and related posts, we are going to need those
+        // later (prevents N+1 queries)
+        $allItems = $menu->nav_items()->get();
+        $allPosts = $this->getPostsCache($allItems);
+
+        $rootItems = $allItems->filter(function ($item) {
             return $item->meta->_menu_item_menu_item_parent == '0';
-        })->map(function ($item) use ($menu) {
-            $formatted = $this->format($item);
+        })->map(function ($item) use ($allItems, $allPosts) {
+            $formatted = $this->format($item, $allPosts);
 
             $formatted->children = collect();
-            foreach ($this->childrenOf($item, $menu) as $child) {
+            foreach ($this->childrenOf($item, $allItems) as $child) {
                 $formatted->children->push($this->format($child));
             }
 
@@ -74,24 +79,24 @@ class MenuBuilder
 
     /**
      * Find all children of an item, or the root-level items when parent is null
-     * @param  Collection $items    Menu items
-     * @param  mixed        $parentID id of the parent, optional
-     * @return Collection
+     * @param  Post       $item     the item of record
+     * @param  Collection $allItems all items in the menu
+     * @return Collection           all child items from the item of record
      */
-    private function childrenOf(Post $item, CorcelMenu $menu) : Collection
+    private function childrenOf(Post $item, $allItems) : Collection
     {
-        return $menu->nav_items->filter(function ($candidate) use ($item) {
+        return $allItems->filter(function ($candidate) use ($item) {
             return $candidate->meta->_menu_item_menu_item_parent == $item->ID;
         });
     }
 
     /**
      * Restructures a nav_menu_item into a useful format
-     * @param  Post     $item a post object of type nav_menu_item
-     * @param  string   $url  optional URL to highlight the current page
-     * @return StdClass       having properties id, title, active && url
+     * @param  Post     $item       a post object of type nav_menu_item
+     * @param  Collection $allPosts all posts referred to in the menu
+     * @return StdClass             having properties id, title, active && url
      */
-    private function format(Post $item)
+    private function format(Post $item, $allPosts)
     {
         $result = new \StdClass;
         $result->id = $item->ID;
@@ -99,7 +104,7 @@ class MenuBuilder
         // Use this item's URL, or fallback to the post URL
         $result->url = $item->meta->_menu_item_url;
         if (empty($result->url)) {
-            $post = Post::find($item->meta->_menu_item_object_id);
+            $post = $allPosts[$item->meta->_menu_item_object_id];
             if (!$post) {
                 throw new Exception('Got menu item that is neither a post nor custom URL');
             }
@@ -114,7 +119,7 @@ class MenuBuilder
         // Use this link's title, or fallback to the post title
         $result->title = $item->post_title;
         if (empty($result->title)) {
-            $post = Post::find($item->meta->_menu_item_object_id);
+            $post = $allPosts[$item->meta->_menu_item_object_id];
             if ($post) {
                 $result->title = $post->title;
             } else {
@@ -139,5 +144,19 @@ class MenuBuilder
         } else {
             return '/' . $path;
         }
+    }
+
+    /**
+     * Find all posts that are referred to in the menu
+     * @param  Collection $allItems all menu nav_items
+     * @return Collection           all posts, indexed by post->ID
+     */
+    private function getPostsCache($allItems)
+    {
+        $ids = $allItems->map(function ($item) {
+            return $item->meta->_menu_item_object_id;
+        });
+
+        return Post::whereIn('id', $ids)->with('meta')->get()->keyBy('ID');
     }
 }
