@@ -41,7 +41,7 @@ class Picture
      */
     private function transform($picture, Collection $breakpoints)
     {
-        $crops = collect($picture->attachment->meta->_wp_attachment_metadata['sizes']);
+        $crops = collect(unserialize($picture->attachment->meta->_wp_attachment_metadata)['sizes']);
 
         $picture->sources = $this->calculateSrcSets($picture, $breakpoints, $crops);
         $picture->src = $this->storage.$picture->attachment->meta->_wp_attached_file;
