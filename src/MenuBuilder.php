@@ -2,8 +2,8 @@
 
 namespace WP4Laravel;
 
-use Corcel\Menu as CorcelMenu;
-use Corcel\Post;
+use Corcel\Model\Menu as CorcelMenu;
+use Corcel\Model\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
@@ -56,7 +56,7 @@ class MenuBuilder
 
         // Get all menu items and related posts, we are going to need those
         // later (prevents N+1 queries)
-        $allItems = $menu->nav_items()->get();
+        $allItems = $menu->items()->get();
         $allPosts = $this->getPostsCache($allItems);
 
         $rootItems = $allItems->filter(function ($item) {
