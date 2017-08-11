@@ -2,7 +2,7 @@
 
 namespace WP4Laravel\Corcel;
 
-use Corcel\Options;
+use Corcel\Model\Option;
 
 trait Seo
 {
@@ -13,29 +13,33 @@ trait Seo
      */
     public function getSeoAttribute()
     {
-        if ($this instanceof \Corcel\TermTaxonomy) {
+        if ($this instanceof \Corcel\Model\TermTaxonomy) {
             return $this->getSeoAttributeForTerms();
         }
 
+        $meta = $this->meta->mapWithKeys(function ($item) {
+            return [$item['meta_key']=>$item['meta_value']];
+        });
+
         return collect([
-            'keywords' => $this->meta->getAttribute('_yoast_wpseo_focuskw') ?: '',
-            'title' => $this->meta->getAttribute('_yoast_wpseo_title') ?: $this->title,
-            'description' => $this->meta->_yoast_wpseo_metadesc ?: $this->excerpt,
-            'metakeywords' => $this->meta->_yoast_wpseo_metakeywords ?: '',
-            'noindex' => $this->meta->getAttribute('_yoast_wpseo_meta-robots-noindex') ?: '',
-            'nofollow' => $this->meta->getAttribute('_yoast_wpseo_meta-robots-nofollow') ?: '',
-            'opengraph-title' => $this->getAttribute('meta->_yoast_wpseo_opengraph-title') ?: $this->title,
-            'opengraph-description' => $this->meta->getAttribute('_yoast_wpseo_opengraph-description') ?: $this->excerpt,
-            'image' => $this->meta->getAttribute('_yoast_wpseo_opengraph-image') ?: '',
-            'twitter-title' => $this->meta->getAttribute('_yoast_wpseo_twitter-title') ?: '',
-            'twitter-description' => $this->meta->getAttribute('_yoast_wpseo_twitter-description') ?: $this->excerpt,
-            'twitter-image' => $this->meta->getAttribute('_yoast_wpseo_twitter-image') ?: '',
+            'keywords' => $meta->get('_yoast_wpseo_focuskw') ?: '',
+            'title' => $meta->get('_yoast_wpseo_title') ?: $this->title,
+            'description' => $meta->get('_yoast_wpseo_metadesc') ?: $this->excerpt,
+            'metakeywords' => $meta->get('_yoast_wpseo_metakeywords') ?: '',
+            'noindex' => $meta->get('_yoast_wpseo_meta-robots-noindex') ?: '',
+            'nofollow' => $meta->get('_yoast_wpseo_meta-robots-nofollow') ?: '',
+            'opengraph-title' => $meta->get('_yoast_wpseo_opengraph-title') ?: $this->title,
+            'opengraph-description' => $meta->get('_yoast_wpseo_opengraph-description') ?: $this->excerpt,
+            'image' => $meta->get('_yoast_wpseo_opengraph-image') ?: '',
+            'twitter-title' => $meta->get('_yoast_wpseo_twitter-title') ?: '',
+            'twitter-description' => $meta->get('_yoast_wpseo_twitter-description') ?: $this->excerpt,
+            'twitter-image' => $meta->get('_yoast_wpseo_twitter-image') ?: '',
         ]);
     }
 
     protected function getSeoAttributeForTerms()
     {
-        $meta = Options::get('wpseo_taxonomy_meta');
+        $meta = Option::get('wpseo_taxonomy_meta');
 
         if (!empty($meta[$this->taxonomy][$this->term_id])) {
             $data = collect($meta[$this->taxonomy][$this->term_id]);
