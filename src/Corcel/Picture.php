@@ -3,7 +3,7 @@
 namespace WP4Laravel\Corcel;
 
 use Corcel\Acf\Field\Image;
-use Corcel\ThumbnailMeta;
+use Corcel\Model\Meta\ThumbnailMeta;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 

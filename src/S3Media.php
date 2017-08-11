@@ -12,7 +12,7 @@ namespace WP4Laravel;
 use Illuminate\Support\Facades\Storage;
 use Corcel\Acf\Field\Image;
 use Corcel\Acf\Field\File;
-use Corcel\ThumbnailMeta;
+use Corcel\Model\Meta\ThumbnailMeta;
 
 class S3Media
 {
