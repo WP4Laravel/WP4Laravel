@@ -46,12 +46,13 @@ class S3Media
         //	Save the media object as object property
         $this->media = $media;
 
+
         //	Check if the given media object is an instance of
         //	Image (corcel/acf) or ThumbnailMeta (corcel/corcel)
         if ($media instanceof Image
             || $media instanceof File
             || $media instanceof ThumbnailMeta) {
-            $this->s3info = $this->media->attachment->meta->amazonS3_info;
+            $this->s3info = unserialize($this->media->attachment->meta->amazonS3_info);
         }
     }
 
