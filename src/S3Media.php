@@ -107,7 +107,7 @@ class S3Media
         }
 
         //	Get all available sizes of the file
-        $sizes = $this->media->attachment->meta->_wp_attachment_metadata['sizes'];
+        $sizes = unserialize($this->media->attachment->meta->_wp_attachment_metadata)['sizes'];
 
         //	Check if the requested size exists or the requested size is the original
         //	If so return the url of the original file
