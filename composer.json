@@ -16,8 +16,16 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "illuminate/database": "^5.4.19",
-        "jgrossi/corcel": "^2.4.0",
+        "illuminate/database": "^5.5.0",
+        "jgrossi/corcel": "^2.5.0",
         "corcel/acf": "^1.0.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "WP4Laravel\\WP4LaravelServiceProvider"
+            ]
+        }
     }
+
 }
