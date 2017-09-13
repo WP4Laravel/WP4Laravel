@@ -2,6 +2,8 @@
 
 A bunch of helper classes to make a headless setup of Wordpress with Laravel great.
 
+>Note: For Laravel 5.4 or lower, use the 0.5 branch!
+
 ## Installation
 
 ```
