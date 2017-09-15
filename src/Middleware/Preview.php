@@ -21,7 +21,7 @@ class Preview
         $validator = Validator::make($request->all(), [
               'preview' => 'required|string|size:4',
               'p' => ['required_without:page_id', 'numeric'],
-              'post_type' =>  ['required_without:page_id', Rule::in(array_keys(config('corcel.preview')))],
+              'post_type' =>  [Rule::in(array_keys(config('corcel.preview')))],
               'page_id' => ['required_without:p', 'numeric'],
         ]);
 
