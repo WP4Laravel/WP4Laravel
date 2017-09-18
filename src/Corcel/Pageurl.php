@@ -2,6 +2,8 @@
 
 namespace WP4Laravel\Corcel;
 
+use Corcel\Model\Option;
+
 trait Pageurl
 {
 
@@ -80,5 +82,46 @@ trait Pageurl
 
         //	Otherwise just return null
         return null;
+    }
+
+    /**
+     * Get the URL of a Page, by checking the path of parents
+     * @return string
+     */
+    public function getUrlAttribute()
+    {
+        $parts = [$this->slug];
+
+        if (!$this->parent) {
+            return $this->slug;
+        }
+
+        $parent = $this->parent;
+        while ($parent) {
+            array_unshift($parts, $parent->slug);
+            $parent = $parent->parent;
+        }
+
+        return implode('/', $parts);
+    }
+
+
+    /**
+     * Get the setted homepage from the WP options table
+     * @return Page | null
+     */
+    public static function homepage()
+    {
+        //	Get the setting for the setted homepage
+        if (!$id = Option::get('page_on_front')) {
+            return null;
+        }
+
+        //	Find the page based on the id from the setting
+        if (!$page = static::find($id)) {
+            return null;
+        }
+
+        return $page;
     }
 }
