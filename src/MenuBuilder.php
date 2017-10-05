@@ -66,7 +66,7 @@ class MenuBuilder
 
             $formatted->children = collect();
             foreach ($this->childrenOf($item, $allItems) as $child) {
-                $formatted->children->push($this->format($child));
+                $formatted->children->push($this->format($child, $allPosts));
             }
 
             $formatted->childActive = ($formatted->children->filter->active->count() > 0);
