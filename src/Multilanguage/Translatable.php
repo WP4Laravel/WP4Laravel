@@ -22,11 +22,12 @@ trait Translatable
 
     /**
      * The language of this model
-     * @return string 2-letter language code
+     * @return string|null 2-letter language code
      */
     public function getLanguageAttribute()
     {
-        return $this->taxonomies()->where('taxonomy', 'language')->first()->slug;
+        $taxonomy = $this->taxonomies()->where('taxonomy', 'language')->first();
+        return $taxonomy ? $taxonomy->slug : null;
     }
 
     /**
