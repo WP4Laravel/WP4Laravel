@@ -31,12 +31,14 @@ trait Seo
             'description' => $meta->get('_yoast_wpseo_metadesc') ?: $this->excerpt,
             'keywords' => $meta->get('_yoast_wpseo_metakeywords') ?: '',
             'robots' => $robots,
+            'og:type' => 'website',
             'og:title' => $meta->get('_yoast_wpseo_opengraph-title') ?: $this->title,
             'og:site_name' => $meta->get('_yoast_wpseo_opengraph-description') ?: $this->excerpt,
             'og:image' => $meta->get('_yoast_wpseo_opengraph-image') ?: '',
             'twitter:title' => $meta->get('_yoast_wpseo_twitter-title') ?: '',
             'twitter:description' => $meta->get('_yoast_wpseo_twitter-description') ?: $this->excerpt,
             'twitter:image' => $meta->get('_yoast_wpseo_twitter-image') ?: '',
+            'twitter:card' => 'summary_large_image',
         ])->filter(function ($entry) {
             return !empty($entry);
         });
@@ -60,12 +62,14 @@ trait Seo
             'title' => $data['wpseo_title'] ?? $this->title,
             'description' => $data['wpseo_title'] ?? $this->description,
             'robots' => $robots,
+            'og:type' => 'website',
             'og:title' => $data['wpseo_opengraph-title'] ?? $this->title,
             'og:description' => $data['wpseo_opengraph-description'] ?? $this->description,
             'og:image' => $data['wpseo_opengraph-image'] ?? '',
             'twitter:title' => $data['wpseo_twitter-title'] ?? '',
             'twitter:description' => $data['wpseo_twitter-description'] ?? $this->description,
             'twitter:image' => $data['wpseo_twitter-image'] ?? '',
+            'twitter:card' => 'summary_large_image',
         ])->filter(function ($entry) {
             return !empty($entry);
         });
