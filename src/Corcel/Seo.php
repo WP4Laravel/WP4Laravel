@@ -37,7 +37,9 @@ trait Seo
             'twitter:title' => $meta->get('_yoast_wpseo_twitter-title') ?: '',
             'twitter:description' => $meta->get('_yoast_wpseo_twitter-description') ?: $this->excerpt,
             'twitter:image' => $meta->get('_yoast_wpseo_twitter-image') ?: '',
-        ]);
+        ])->filter(function ($entry) {
+            return !empty($entry);
+        });
     }
 
     protected function getSeoAttributeForTerms()
@@ -64,6 +66,8 @@ trait Seo
             'twitter:title' => $data['wpseo_twitter-title'] ?? '',
             'twitter:description' => $data['wpseo_twitter-description'] ?? $this->description,
             'twitter:image' => $data['wpseo_twitter-image'] ?? '',
-        ]);
+        ])->filter(function ($entry) {
+            return !empty($entry);
+        });
     }
 }
