@@ -21,12 +21,16 @@ trait Seo
             return [$item['meta_key']=>$item['meta_value']];
         });
 
+        // Determine most appropriate robots tag
+        $index = $meta->get('_yoast_wpseo_meta-robots-noindex') ? 'noindex' : 'index';
+        $follow = $meta->get('_yoast_wpseo_meta-robots-nofollow') ? 'nofollow' : 'follow';
+        $robots = implode(', ', [$index, $follow]);
+
         return collect([
             'title' => $meta->get('_yoast_wpseo_title') ?: $this->title,
             'description' => $meta->get('_yoast_wpseo_metadesc') ?: $this->excerpt,
             'keywords' => $meta->get('_yoast_wpseo_metakeywords') ?: '',
-            'noindex' => $meta->get('_yoast_wpseo_meta-robots-noindex') ?: '',
-            'nofollow' => $meta->get('_yoast_wpseo_meta-robots-nofollow') ?: '',
+            'robots' => $robots,
             'og:title' => $meta->get('_yoast_wpseo_opengraph-title') ?: $this->title,
             'og:site_name' => $meta->get('_yoast_wpseo_opengraph-description') ?: $this->excerpt,
             'og:image' => $meta->get('_yoast_wpseo_opengraph-image') ?: '',
@@ -44,12 +48,16 @@ trait Seo
             $data = collect($meta[$this->taxonomy][$this->term_id]);
         }
 
+        // Determine most appropriate robots tag
+        $index = $data['wpseo_noindex'] ? 'noindex' : 'index';
+        $follow = $data['wpseo_nofollow'] ? 'nofollow' : 'follow';
+        $robots = implode(', ', [$index, $follow]);
+
         return collect([
             'keywords' => $data['_yoast_wpseo_focuskw'] ?? '',
             'title' => $data['wpseo_title'] ?? $this->title,
             'description' => $data['wpseo_title'] ?? $this->description,
-            'noindex' => $data['wpseo_noindex'] ?? '',
-            'nofollow' => $data['wpseo_nofollow'] ?? '',
+            'robots' => $robots,
             'og:title' => $data['wpseo_opengraph-title'] ?? $this->title,
             'og:description' => $data['wpseo_opengraph-description'] ?? $this->description,
             'og:image' => $data['wpseo_opengraph-image'] ?? '',
