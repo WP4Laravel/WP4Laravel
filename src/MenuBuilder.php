@@ -3,6 +3,7 @@
 namespace WP4Laravel;
 
 use Corcel\Model\Menu as CorcelMenu;
+use Corcel\Model\Option;
 use Corcel\Model\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -38,6 +39,34 @@ class MenuBuilder
         return CorcelMenu::all()->mapWithKeys(function ($menu) {
             return [$menu->slug => $this->itemsIn($menu)];
         });
+    }
+
+    /**
+     * Find the appropriate menu to show for a slot. Supports multilanguage menu's
+     * based on Polylang
+     * @param  string $location nav_menu_location to show
+     * @param  string $language language code, optional
+     * @return \Corcel\Model\Menu
+     */
+    public function menuForLocation($location, $language = null)
+    {
+        if ($language === null) {
+            // Read the basic wordpress theme settings
+            $settings = Option::get('theme_mods_laravel');
+            if (!$settings || empty($settings['nav_menu_locations'][$location])) {
+                return null;
+            }
+            $id = $settings['nav_menu_locations'][$location];
+        } else {
+            // Read the translated settings of Polylang
+            $settings = Option::get('polylang');
+            if (!$settings || empty($settings['nav_menus']['laravel'][$location][$language])) {
+                return null;
+            }
+            $id = $settings['nav_menus']['laravel']['main'][$language];
+        }
+
+        return CorcelMenu::find($id);
     }
 
     /**
