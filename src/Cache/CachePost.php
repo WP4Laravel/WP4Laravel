@@ -81,7 +81,7 @@ class CachePost extends CacheContent
         Cache::forget($cache_key_timestamp);
 
         //	Run the original logic from the callback
-        $result = $default();
+        $result = $default($this->post);
 
         //	Save the cache forever
         if ($this->hasTags()) {
