@@ -68,9 +68,10 @@ class Picture
             // Transform those crops in a valid srcset-attribute
             $breakpoint->srcset = $crops->filter(function ($data, $crop_name) use ($crop) {
                 return strpos($crop_name, $crop) === 0;
-            })->map(function ($data, $cropname) {
-                $parts = explode('_', $cropname);
-                return $this->storage.$data['file'].' '.end($parts);
+            })->map(function ($data, $cropname) use ($picture) {
+                $url = $picture->size($cropname)->url;
+                $size = explode('_', $cropname)[1];
+                return "$url $size";
             })->implode(', ');
 
             return $breakpoint;
