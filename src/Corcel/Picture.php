@@ -22,14 +22,14 @@ class Picture
      */
     public function compose(View $view)
     {
-        $picture = $view->picture;
-        $breakpoints = collect($view->breakpoints);
-
-        if (!$picture || !$breakpoints) {
+        if (!$view->picture || !$view->breakpoints) {
             throw new \InvalidArgumentException('Either $picture or $breakpoints not set');
         }
 
+        $breakpoints = collect($view->breakpoints);
+        $picture = $view->picture;
         $picture = $this->transform($picture, $breakpoints);
+
         $view->with('picture', $picture);
     }
 
