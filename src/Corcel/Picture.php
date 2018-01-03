@@ -9,13 +9,6 @@ use Illuminate\View\View;
 
 class Picture
 {
-    private $storage = '';
-
-    public function __construct()
-    {
-        $this->storage = config('picture.uploads_path', '');
-    }
-
     /**
      * Compose a view file with data used to render the correct srcsets, etc.
      * @param  View   $view
@@ -44,7 +37,7 @@ class Picture
         $crops = collect(unserialize($picture->attachment->meta->_wp_attachment_metadata)['sizes']);
 
         $picture->sources = $this->calculateSrcSets($picture, $breakpoints, $crops);
-        $picture->src = $this->storage.$picture->attachment->meta->_wp_attached_file;
+        $picture->src = $picture->size('full')->url;
         $picture->alt = $picture->attachment->meta->_wp_attachment_image_alt;
 
         return $picture;
