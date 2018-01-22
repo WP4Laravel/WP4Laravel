@@ -62,7 +62,13 @@ class Picture
             $breakpoint->srcset = $crops->filter(function ($data, $crop_name) use ($crop) {
                 return strpos($crop_name, $crop) === 0;
             })->map(function ($data, $cropname) use ($picture) {
-                $url = $picture->size($cropname)->url;
+                $crop = $picture->size($cropname);
+                if(is_string($crop)) {
+                    $url = $crop;
+                }
+                else {
+                    $url = $crop->url;
+                }
                 $size = explode('_', $cropname)[1];
                 return "$url $size";
             })->implode(', ');
