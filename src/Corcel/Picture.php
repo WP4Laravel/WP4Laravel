@@ -92,7 +92,8 @@ class Picture
                         $url = NULL;
                         break;
                 }
-                $size = explode('_', $cropname)[1];
+                $sizeArray = explode('_', $cropname);
+                $size = end($sizeArray);
                 return "$url $size";
             })->implode(', ');
 
