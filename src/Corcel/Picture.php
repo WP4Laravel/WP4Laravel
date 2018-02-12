@@ -37,7 +37,22 @@ class Picture
         $crops = collect(unserialize($picture->attachment->meta->_wp_attachment_metadata)['sizes']);
 
         $picture->sources = $this->calculateSrcSets($picture, $breakpoints, $crops);
-        $picture->src = $picture->size('full')->url;
+        $crop = $picture->size('full');
+        switch (gettype($crop)) {
+            case 'array':
+                $url = $crop['url'];
+                break;
+            case 'string':
+                $url = $crop;
+                break;
+            case 'object':
+                $url = $crop->url;
+                break;
+            default:
+                $url = NULL;
+                break;
+        }
+        $picture->src = $url;
         $picture->alt = $picture->attachment->meta->_wp_attachment_image_alt;
 
         return $picture;
@@ -62,8 +77,23 @@ class Picture
             $breakpoint->srcset = $crops->filter(function ($data, $crop_name) use ($crop) {
                 return strpos($crop_name, $crop) === 0;
             })->map(function ($data, $cropname) use ($picture) {
-                $url = $picture->size($cropname)->url;
-                $size = explode('_', $cropname)[1];
+                $crop = $picture->size($cropname);
+                switch (gettype($crop)) {
+                    case 'array':
+                        $url = $crop['url'];
+                        break;
+                    case 'string':
+                        $url = $crop;
+                        break;
+                    case 'object':
+                        $url = $crop->url;
+                        break;
+                    default:
+                        $url = NULL;
+                        break;
+                }
+                $sizeArray = explode('_', $cropname);
+                $size = end($sizeArray);
                 return "$url $size";
             })->implode(', ');
 
