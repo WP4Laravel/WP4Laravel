@@ -179,37 +179,37 @@ class Wpautop
     public function wp_replace_in_html_tags($haystack, $replace_pairs)
     {
         // Find all elements.
-    $textarr = $this->wp_html_split($haystack);
+        $textarr = $this->wp_html_split($haystack);
         $changed = false;
 
-    // Optimize when searching for one item.
-    if (1 === count($replace_pairs)) {
-        // Extract $needle and $replace.
-        foreach ($replace_pairs as $needle => $replace);
+        // Optimize when searching for one item.
+        if (1 === count($replace_pairs)) {
+            // Extract $needle and $replace.
+            foreach ($replace_pairs as $needle => $replace);
 
-        // Loop through delimiters (elements) only.
-        for ($i = 1, $c = count($textarr); $i < $c; $i += 2) {
-            if (false !== strpos($textarr[$i], $needle)) {
-                $textarr[$i] = str_replace($needle, $replace, $textarr[$i]);
-                $changed = true;
-            }
-        }
-    } else {
-        // Extract all $needles.
-        $needles = array_keys($replace_pairs);
-
-        // Loop through delimiters (elements) only.
-        for ($i = 1, $c = count($textarr); $i < $c; $i += 2) {
-            foreach ($needles as $needle) {
+            // Loop through delimiters (elements) only.
+            for ($i = 1, $c = count($textarr); $i < $c; $i += 2) {
                 if (false !== strpos($textarr[$i], $needle)) {
-                    $textarr[$i] = strtr($textarr[$i], $replace_pairs);
+                    $textarr[$i] = str_replace($needle, $replace, $textarr[$i]);
                     $changed = true;
-                    // After one strtr() break out of the foreach loop and look at next element.
-                    break;
+                }
+            }
+        } else {
+            // Extract all $needles.
+            $needles = array_keys($replace_pairs);
+
+            // Loop through delimiters (elements) only.
+            for ($i = 1, $c = count($textarr); $i < $c; $i += 2) {
+                foreach ($needles as $needle) {
+                    if (false !== strpos($textarr[$i], $needle)) {
+                        $textarr[$i] = strtr($textarr[$i], $replace_pairs);
+                        $changed = true;
+                        // After one strtr() break out of the foreach loop and look at next element.
+                        break;
+                    }
                 }
             }
         }
-    }
 
         if ($changed) {
             $haystack = implode($textarr);

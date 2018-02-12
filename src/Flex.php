@@ -67,7 +67,7 @@ class Flex
 
             return $item;
 
-        //	Filter out items, which have not a matching template partial
+            //	Filter out items, which have not a matching template partial
         })->filter(function ($item) {
             return View::exists($item->view);
         });

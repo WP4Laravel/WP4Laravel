@@ -49,7 +49,7 @@ class Picture
                 $url = $crop->url;
                 break;
             default:
-                $url = NULL;
+                $url = null;
                 break;
         }
         $picture->src = $url;
@@ -89,7 +89,7 @@ class Picture
                         $url = $crop->url;
                         break;
                     default:
-                        $url = NULL;
+                        $url = null;
                         break;
                 }
                 $sizeArray = explode('_', $cropname);
