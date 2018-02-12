@@ -32,6 +32,8 @@ class ImageFake
             return ['url' => $size];
         });
 
+        $this->url = $this->sizes->first()['url'];
+
         $this->attachment = (object) [
             'meta' => (object) [
                 '_wp_attachment_metadata' => serialize([
@@ -47,6 +49,7 @@ class ImageFake
      * Public UI à la \Corcel\Model\Meta\ThumbnailMeta
      */
     public $attachment;
+    public $url;
 
     public function size($size)
     {
