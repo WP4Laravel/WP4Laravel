@@ -156,6 +156,9 @@ class MenuBuilder
             }
         }
 
+        // Add the target field, if set
+        $result->target = !empty($item->meta->_menu_item_target);
+
         return $result;
     }
 
