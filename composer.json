@@ -20,7 +20,7 @@
         "illuminate/support": "^5.5.0",
         "jgrossi/corcel": "^2.5.0",
         "corcel/acf": "^1.0.0",
-        "roumen/feed": "^2.12"
+        "roumen/feed": "2.11.*"
     },
     "extra": {
         "laravel": {
