@@ -53,6 +53,10 @@ class ImageFake
 
     public function size($size)
     {
+        if ($size === 'full') {
+            return $this->sizes['full']['url'];
+        }
+
         return (object) $this->sizes[$size];
     }
 
