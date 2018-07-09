@@ -97,7 +97,7 @@ trait Pageurl
             $parent = $parent->parent;
         }
 
-        return implode('/', $parts);
+        return '/' . implode('/', $parts);
     }
 
 
