@@ -91,10 +91,6 @@ trait Pageurl
     {
         $parts = [$this->slug];
 
-        if (!$this->parent) {
-            return $this->slug;
-        }
-
         $parent = $this->parent;
         while ($parent) {
             array_unshift($parts, $parent->slug);
