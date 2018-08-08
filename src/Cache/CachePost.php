@@ -11,7 +11,7 @@ use Corcel\Model;
  *    This class adds a cache context for WP posts
  *    Only return the cache if key not exists or the updated time of the post is recent
  *
- * 	  Usage: $test = (new PostCache($post))->remember("my_key", function() { return "my original data"; });
+ * 	  Usage: $test = (new PostCache($post))->forever("my_key", function() { return "my original data"; });
 **/
 class CachePost extends CacheContent
 {
