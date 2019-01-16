@@ -4,10 +4,8 @@
     "type": "laravel-package",
     "license": "MIT",
     "authors": [
-        {
-            "name": "IN10dev",
-            "email": "development@in10.nl"
-        }
+        { "name": "Marco Boom" },
+        { "name": "Jakob Buis", "email": "jakob@jakobbuis.nl" }
     ],
     "autoload": {
         "psr-4": {
