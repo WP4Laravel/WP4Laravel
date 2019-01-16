@@ -3,7 +3,7 @@
 namespace WP4Laravel\Middleware;
 
 use Closure;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class Preview

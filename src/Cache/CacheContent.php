@@ -2,8 +2,8 @@
 
 namespace WP4Laravel\Cache;
 
-use Cache;
 use Closure;
+use Illuminate\Support\Facades\Cache;
 
 class CacheContent
 {

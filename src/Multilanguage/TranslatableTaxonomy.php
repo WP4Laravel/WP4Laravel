@@ -5,7 +5,7 @@ namespace WP4Laravel\Multilanguage;
 use Corcel\Model\TermRelationship;
 use Illuminate\Database\Eloquent\Builder;
 
-class TranslatableTaxonomy
+trait TranslatableTaxonomy
 {
     /**
      * Filter a translatable taxonomy by language

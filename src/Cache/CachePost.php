@@ -2,10 +2,10 @@
 
 namespace WP4Laravel\Cache;
 
-use Cache;
-use Closure;
 use Carbon\Carbon;
+use Closure;
 use Corcel\Model;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * This class adds a cache context for WP posts

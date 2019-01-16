@@ -3,7 +3,8 @@
 namespace WP4Laravel;
 
 use Corcel\Model;
-use View;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\View;
 use WP4Laravel\Cache\CachePost;
 
 /**
@@ -16,13 +17,13 @@ class Flex
 {
     /**
      * The current post
-     * @var Post
+     * @var \Corcel\Model\Post
      */
     protected $post;
 
     /**
      * The ACF Field
-     * @var Collection
+     * @var \Illuminate\Support\Collection
      */
     protected $field;
 
@@ -49,9 +50,8 @@ class Flex
 
     /**
      * Check all components
-     * @return Collection
      */
-    public function content()
+    public function content() : Collection
     {
         //  Return a collection
         $return = collect();
@@ -75,9 +75,8 @@ class Flex
 
     /**
      * Render all components and return as HTML
-     * @return string
      */
-    public function render()
+    public function render() : string
     {
         //  Map over every item and reduce the result to a HTML
         return $this->content()->reduce(function ($container, $item) {
@@ -89,7 +88,7 @@ class Flex
     }
 
 
-    public function text()
+    public function text() : Collection
     {
         return $this->content()->map(function ($item) {
             return collect($item->fields)->reduce(function ($container, $sub) {

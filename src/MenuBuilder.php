@@ -5,9 +5,11 @@ namespace WP4Laravel;
 use Corcel\Model\Menu as CorcelMenu;
 use Corcel\Model\Option;
 use Corcel\Model\Post;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
+use InvalidArgumentException;
 
 /**
  * Utility class for determining menu contents
@@ -16,7 +18,7 @@ class MenuBuilder
 {
     /**
      * Current request to the application
-     * @var Illuminate\Http\Request
+     * @var Request
      */
     private $request;
 
@@ -123,11 +125,11 @@ class MenuBuilder
      * Restructures a nav_menu_item into a useful format
      * @param  Post     $item       a post object of type nav_menu_item
      * @param  Collection $allPosts all posts referred to in the menu
-     * @return StdClass             having properties id, title, active && url
+     * @return object             having properties id, title, active && url
      */
     private function format(Post $item, $allPosts)
     {
-        $result = new \StdClass();
+        $result = (object)[];
         $result->id = $item->ID;
 
         // Use this item's URL, or fallback to the post URL

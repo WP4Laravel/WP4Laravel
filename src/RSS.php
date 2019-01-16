@@ -20,7 +20,7 @@ class RSS
         // Sanity check: all items must be posts
         foreach ($posts as $post) {
             if (!$post instanceof Post) {
-                throw \InvalidArgumentException('RSS feed can only be made out of \Corcel\Model\Post-objects');
+                throw new \InvalidArgumentException('RSS feed can only be made out of \Corcel\Model\Post-objects');
             }
         }
 

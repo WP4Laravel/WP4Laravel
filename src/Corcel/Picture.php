@@ -69,7 +69,7 @@ class Picture
     {
         return $breakpoints->map(function ($crop, $query) use ($picture, $crops) {
             // Create an object representation of this <source>
-            $breakpoint = new \StdClass();
+            $breakpoint = (object)[];
             $breakpoint->mediaQuery = $query;
 
             // Filter all crops to find the ones we use in this srcset

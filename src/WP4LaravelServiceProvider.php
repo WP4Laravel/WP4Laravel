@@ -2,8 +2,8 @@
 
 namespace WP4Laravel;
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use View;
 use WP4Laravel\Corcel\Picture;
 
 class WP4LaravelServiceProvider extends ServiceProvider
