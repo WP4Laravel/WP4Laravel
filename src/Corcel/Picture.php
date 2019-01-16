@@ -15,7 +15,7 @@ class Picture
      */
     public function compose(View $view)
     {
-        if (!$view->picture || !$view->breakpoints) {
+        if (!isset($view->picture) || !isset($view->breakpoints)) {
             throw new \InvalidArgumentException('Either $picture or $breakpoints not set');
         }
 

@@ -17,7 +17,7 @@ class Flex
 {
     /**
      * The current post
-     * @var \Corcel\Model\Post
+     * @var \Corcel\Model
      */
     protected $post;
 
@@ -53,12 +53,9 @@ class Flex
      */
     public function content() : Collection
     {
-        //  Return a collection
-        $return = collect();
-
         //  Does the field exists
-        if (!$this->field) {
-            return $return;
+        if (empty($this->field)) {
+            return collect();
         }
 
         //  Create per component a path to the view

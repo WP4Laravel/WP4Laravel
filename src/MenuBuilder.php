@@ -9,7 +9,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
-use InvalidArgumentException;
 
 /**
  * Utility class for determining menu contents
@@ -24,10 +23,9 @@ class MenuBuilder
 
     /**
      * Construct the utility class
-     * @param string       $slug    slug of the menu
-     * @param Request|null $request current request to highlight items
+     * @param Request $request current request to highlight items
      */
-    public function __construct(Request $request = null)
+    public function __construct(Request $request)
     {
         $this->request = $request;
     }
@@ -50,7 +48,7 @@ class MenuBuilder
      * @param  string $language language code, optional
      * @return \Corcel\Model\Menu
      */
-    public function menuForLocation($location, $language = null)
+    public function menuForLocation(string $location, ?string $language = null) : ?CorcelMenu
     {
         if ($language === null) {
             // Read the basic wordpress theme settings
@@ -81,10 +79,6 @@ class MenuBuilder
      */
     public function itemsIn(CorcelMenu $menu) : Collection
     {
-        if (!$menu) {
-            throw new InvalidArgumentException('Invalid or non-existent menu');
-        }
-
         // Get all menu items and related posts, we are going to need those
         // later (prevents N+1 queries)
         $allItems = $menu->items()->get();

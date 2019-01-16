@@ -12,8 +12,6 @@ class RSS
 {
     /**
      * Generate a ATOM feed from a list of posts
-     * @param  Collection $posts
-     * @return View
      */
     public function feed(Collection $posts, string $title) : Response
     {
