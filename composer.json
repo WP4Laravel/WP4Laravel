@@ -14,8 +14,7 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "illuminate/database": "5.6.*",
-        "illuminate/support": "5.6.*",
+        "laravel/framework": "5.6.*",
         "jgrossi/corcel": "^2.5.0",
         "corcel/acf": "^1.0.0",
         "laravelium/feed": "^2.12"
