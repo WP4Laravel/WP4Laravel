@@ -47,9 +47,5 @@ class WP4LaravelServiceProvider extends ServiceProvider
 
         $this->app->singleton('wp4laravel::menubuilder', \WP4Laravel\MenuBuilder::class);
         $this->app->singleton('wp4laravel::rss', \WP4Laravel\RSS::class);
-
-        $this->commands([
-            \WP4Laravel\Commands\WPURLReplace::class
-        ]);
     }
 }
