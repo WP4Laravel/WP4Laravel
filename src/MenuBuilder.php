@@ -127,7 +127,7 @@ class MenuBuilder
      */
     private function format(Post $item, $allPosts)
     {
-        $result = new \StdClass;
+        $result = new \StdClass();
         $result->id = $item->ID;
 
         // Use this item's URL, or fallback to the post URL

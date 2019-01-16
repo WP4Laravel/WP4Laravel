@@ -15,15 +15,15 @@ trait Template
     public function getTemplateAttribute()
     {
         $options = collect([
-            $this->post_type.'.show',
+            $this->post_type . '.show',
             'post.show',
         ]);
 
-        //	Check if the meta data where the
-        //	defined template is saved
-        //	if not, use the default template
+        //  Check if the meta data where the
+        //  defined template is saved
+        //  if not, use the default template
         if ($this->meta->_wp_page_template) {
-            $options->prepend($this->post_type.".".$this->meta->_wp_page_template);
+            $options->prepend($this->post_type . "." . $this->meta->_wp_page_template);
         }
 
         foreach ($options as $item) {

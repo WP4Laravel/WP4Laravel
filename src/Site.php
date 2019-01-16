@@ -14,7 +14,7 @@ class Site
 
     public function model($model)
     {
-        foreach ($this->data as $key=>$value) {
+        foreach ($this->data as $key => $value) {
             if ($result = $model->$key) {
                 $this->data[$key] = $model->$key;
             }
@@ -35,9 +35,9 @@ class Site
         return S3Media::handle($media);
     }
 
-    public function get($key, $default='')
+    public function get($key, $default = '')
     {
-        //	Check on dot notation
+        //  Check on dot notation
         if ($val = array_get($this->data, $key)) {
             return is_array($val) ? collect($val) : $val;
         }
@@ -61,7 +61,7 @@ class Site
     }
 
 
-    public function set($item, $value=null)
+    public function set($item, $value = null)
     {
         if (!is_array($item)) {
             if (str_contains($item, ".")) {
@@ -70,10 +70,10 @@ class Site
                 return $this;
             }
 
-            $item = [$item=>$value];
+            $item = [$item => $value];
         }
 
-        foreach ($item as $key=>$value) {
+        foreach ($item as $key => $value) {
             if (!is_string($key)) {
                 continue;
             }
@@ -85,7 +85,7 @@ class Site
     }
 
 
-    public function append($item, $value=null)
+    public function append($item, $value = null)
     {
         if (!is_array($item)) {
             if (str_contains($item, ".")) {
@@ -96,10 +96,10 @@ class Site
                 return $this;
             }
 
-            $item = [$item=>$value];
+            $item = [$item => $value];
         }
 
-        foreach ($item as $key=>$value) {
+        foreach ($item as $key => $value) {
             if (!is_string($key)) {
                 continue;
             }

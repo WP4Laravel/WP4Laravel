@@ -39,7 +39,7 @@ class WPURLReplace extends Command
     public function handle()
     {
         $result = DB::table("wp_posts")
-            ->update(['post_content'=>DB::raw("replace(post_content, '".$this->argument('url')."', '".env('APP_URL')."')")]);
+            ->update(['post_content' => DB::raw("replace(post_content, '" . $this->argument('url') . "', '" . env('APP_URL') . "')")]);
 
         if ($result) {
             $this->info("Replaced {$result} items in wp_posts");
@@ -48,7 +48,7 @@ class WPURLReplace extends Command
         }
 
         $result = DB::table("wp_postmeta")
-            ->update(['meta_value'=>DB::raw("replace(meta_value, '".$this->argument('url')."', '".env('APP_URL')."')")]);
+            ->update(['meta_value' => DB::raw("replace(meta_value, '" . $this->argument('url') . "', '" . env('APP_URL') . "')")]);
 
         if ($result) {
             $this->info("Replaced {$result} items in wp_postmeta");
@@ -57,7 +57,7 @@ class WPURLReplace extends Command
         }
 
         $result = DB::table("wp_options")
-            ->update(['option_value'=>DB::raw("replace(option_value, '".$this->argument('url')."', '".env('APP_URL')."')")]);
+            ->update(['option_value' => DB::raw("replace(option_value, '" . $this->argument('url') . "', '" . env('APP_URL') . "')")]);
 
         if ($result) {
             $this->info("Replaced {$result} items in wp_options");

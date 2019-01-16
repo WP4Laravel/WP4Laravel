@@ -8,10 +8,10 @@ use Carbon\Carbon;
 use Corcel\Model;
 
 /**
- *    This class adds a cache context for WP posts
- *    Only return the cache if key not exists or the updated time of the post is recent
+ * This class adds a cache context for WP posts
+ * Only return the cache if key not exists or the updated time of the post is recent
  *
- * 	  Usage: $test = (new PostCache($post))->remember("my_key", function() { return "my original data"; });
+ * Usage: $test = (new PostCache($post))->remember("my_key", function() { return "my original data"; });
 **/
 class CachePost extends CacheContent
 {
@@ -35,30 +35,30 @@ class CachePost extends CacheContent
     public function forever($key, Closure $default)
     {
         // Check if cache key exists
-        //	If not save it to the cache and return the callback
+        // If not save it to the cache and return the callback
         if (!Cache::has($this->getCacheKey($key))) {
             return $this->save($key, $default);
         }
 
         // Check if cache key timestamp exists
-        //	If not save it to the cache and return the callback
+        // If not save it to the cache and return the callback
         if (!$timestamp = $this->getTimestamp($key)) {
             return $this->save($key, $default);
         }
 
-        //	Check if the post_modified attribute of the post is a Carbon object
-        //	If not create new entry
+        // Check if the post_modified attribute of the post is a Carbon object
+        // If not create new entry
         if (!$this->post->post_modified instanceof Carbon) {
             return $this->save($key, $default);
         }
 
-        //	Check if cache timestamp is newer dan the modified time of the post
-        //	If not, forget the current cache, save it to the cache and return the callback
+        // Check if cache timestamp is newer dan the modified time of the post
+        // If not, forget the current cache, save it to the cache and return the callback
         if ($this->post->post_modified->gt($timestamp)) {
             return $this->save($key, $default);
         }
 
-        //	Return from cache!
+        // Return from cache!
         return Cache::get($this->getCacheKey($key));
     }
 
@@ -70,20 +70,20 @@ class CachePost extends CacheContent
      */
     protected function save($key, Closure $default)
     {
-        //	Get the cache keys for the main results
-        //	and one for the timestamp
+        // Get the cache keys for the main results
+        // and one for the timestamp
         $cache_key = $this->getCacheKey($key);
-        $cache_key_timestamp = $cache_key."_timestamp";
+        $cache_key_timestamp = $cache_key . "_timestamp";
 
-        //	If cache exists, first forget the old data
-        //	TODO: Is this nescessary when saving data under the same key?
+        // If cache exists, first forget the old data
+        // TODO: Is this nescessary when saving data under the same key?
         Cache::forget($cache_key);
         Cache::forget($cache_key_timestamp);
 
-        //	Run the original logic from the callback
+        // Run the original logic from the callback
         $result = $default($this->post);
 
-        //	Save the cache forever
+        // Save the cache forever
         if ($this->hasTags()) {
             Cache::tags($this->tag)->forever($cache_key, $result);
             Cache::tags($this->tag)->forever($cache_key_timestamp, Carbon::now());
@@ -92,7 +92,7 @@ class CachePost extends CacheContent
             Cache::forever($cache_key_timestamp, Carbon::now());
         }
 
-        //	Return the default result
+        // Return the default result
         return $result;
     }
 
@@ -103,7 +103,11 @@ class CachePost extends CacheContent
      */
     protected function getCacheKey($subkey)
     {
-        return config('database.connections.wordpress.prefix').$this->post->post_type."_".$this->post->ID."_".$subkey;
+        $prefix = config('database.connections.wordpress.prefix');
+        $type = $this->post->post_type;
+        $id = $this->post->ID;
+
+        return implode('', [$prefix, $type, '_', $id, '_', $subkey]);
     }
 
     /**
@@ -113,9 +117,9 @@ class CachePost extends CacheContent
      */
     protected function getTimestampCacheKey($subkey)
     {
-        //	It's the same as the normal cache key
-        //	but suffixed with _timestamp
-        return $this->getCacheKey($subkey)."_timestamp";
+        // It's the same as the normal cache key
+        // but suffixed with _timestamp
+        return $this->getCacheKey($subkey) . '_timestamp';
     }
 
     /**
@@ -128,21 +132,21 @@ class CachePost extends CacheContent
         // Get the cache key for the timestamp
         $cache_key = $this->getTimestampCacheKey($subkey);
 
-        //	Does the timestamp exists in cache?
-        //	If not return null, so the data will not returned from cache
+        // Does the timestamp exists in cache?
+        // If not return null, so the data will not returned from cache
         if (!Cache::has($cache_key)) {
             return null;
         }
 
-        //	Get the cached timestamp
+        // Get the cached timestamp
         $timestamp = Cache::get($cache_key);
 
-        //	Check if the cached timestamp is an instance of Carbon
+        // Check if the cached timestamp is an instance of Carbon
         if ($timestamp instanceof Carbon) {
             return $timestamp;
         }
 
-        //	If not return null, so the data will not returned from cache
+        // If not return null, so the data will not returned from cache
         return null;
     }
 }

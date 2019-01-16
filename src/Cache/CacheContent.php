@@ -18,8 +18,8 @@ class CacheContent
         'hourly'    =>  60,
         'twiceADay' =>  720,
         'daily' =>  1440,
-        'weekly' => 1440*7,
-        'monthly' => 1440*30
+        'weekly' => 1440 * 7,
+        'monthly' => 1440 * 30
     ];
 
     public static function __callStatic($method, $args)

@@ -10,7 +10,7 @@ class Wpautop
         return $self->handle($pee, $br);
     }
 
-    public function handle($pee, $br=true)
+    public function handle($pee, $br = true)
     {
         $pre_tags = array();
 
@@ -185,7 +185,8 @@ class Wpautop
         // Optimize when searching for one item.
         if (1 === count($replace_pairs)) {
             // Extract $needle and $replace.
-            foreach ($replace_pairs as $needle => $replace);
+            foreach ($replace_pairs as $needle => $replace) {
+            }
 
             // Loop through delimiters (elements) only.
             for ($i = 1, $c = count($textarr); $i < $c; $i += 2) {
@@ -237,7 +238,7 @@ class Wpautop
             . ')*+'         // Loop possessively.
             . '(?:-->)?';   // End of comment. If not found, match all input.
 
-        $cdata =
+            $cdata =
               '!\[CDATA\['  // Start of comment, after the <.
             . '[^\]]*+'     // Consume non-].
             . '(?:'         // Unroll the loop: Consume everything until ]]> is found.
@@ -246,7 +247,7 @@ class Wpautop
             . ')*+'         // Loop possessively.
             . '(?:]]>)?';   // End of comment. If not found, match all input.
 
-        $escaped =
+            $escaped =
               '(?='           // Is the element escaped?
             .    '!--'
             . '|'

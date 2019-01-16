@@ -37,11 +37,11 @@ class Preview
         $post_type = $post_type ?: 'post';
 
         //  If no route defined in the config, abort the request
-        if (!$route = config('corcel.preview.'.$post_type)) {
+        if (!$route = config('corcel.preview.' . $post_type)) {
             abort(404);
         }
 
         //  Redirect to the show route of the post type, with __preview as unique slug
-        return redirect(route($route, '__preview').'?'.http_build_query($request->all()));
+        return redirect(route($route, '__preview') . '?' . http_build_query($request->all()));
     }
 }

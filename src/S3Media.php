@@ -33,7 +33,7 @@ class S3Media
      */
     public static function handle($image)
     {
-        //	Return a new instance of this class
+        //  Return a new instance of this class
         return (new static($image));
     }
 
@@ -43,12 +43,12 @@ class S3Media
      */
     public function __construct($media)
     {
-        //	Save the media object as object property
+        //  Save the media object as object property
         $this->media = $media;
 
 
-        //	Check if the given media object is an instance of
-        //	Image (corcel/acf) or ThumbnailMeta (corcel/corcel)
+        //  Check if the given media object is an instance of
+        //  Image (corcel/acf) or ThumbnailMeta (corcel/corcel)
         if ($media instanceof Image
             || $media instanceof File
             || $media instanceof ThumbnailMeta) {
@@ -62,12 +62,12 @@ class S3Media
      */
     public function path()
     {
-        //	Does the meta data with S3 data exists within the media object
+        //  Does the meta data with S3 data exists within the media object
         if (empty($this->s3info['key'])) {
             return null;
         }
 
-        //	Get the path of the media object, trim off the slashes
+        //  Get the path of the media object, trim off the slashes
         $filename = trim($this->s3info['key'], '/');
 
         return $filename;
@@ -79,18 +79,18 @@ class S3Media
      */
     public function url()
     {
-        //	Get the path of the file
+        //  Get the path of the file
         if (!$filename = $this->path()) {
             return null;
         }
 
-        //	Check if the file exists on the S3 bucket
-        //	If so, return the url of the file
+        //  Check if the file exists on the S3 bucket
+        //  If so, return the url of the file
         if (Storage::disk('s3')->exists($filename)) {
             return Storage::disk('s3')->url($filename);
         }
 
-        //	File does not exists, return null
+        //  File does not exists, return null
         return null;
     }
 
@@ -101,30 +101,30 @@ class S3Media
      */
     public function size($size)
     {
-        //	Get the path of the file
+        //  Get the path of the file
         if (!$filename = $this->path()) {
             return null;
         }
 
-        //	Get all available sizes of the file
+        //  Get all available sizes of the file
         $sizes = unserialize($this->media->attachment->meta->_wp_attachment_metadata)['sizes'];
 
-        //	Check if the requested size exists or the requested size is the original
-        //	If so return the url of the original file
+        //  Check if the requested size exists or the requested size is the original
+        //  If so return the url of the original file
         if (! isset($sizes[$size]) || $size  == 'full') {
             return $this->url();
         }
 
-        //	Create the filename of the size
-        $filename = dirname($filename). '/' . $sizes[$size]['file'];
+        //  Create the filename of the size
+        $filename = dirname($filename) . '/' . $sizes[$size]['file'];
 
-        //	Check if the file exists on the S3 bucket
-        //	If so, return the url of the size
+        //  Check if the file exists on the S3 bucket
+        //  If so, return the url of the size
         if (Storage::disk('s3')->exists($filename)) {
             return Storage::disk('s3')->url($filename);
         }
 
-        //	File does not exists, return null
+        //  File does not exists, return null
         return null;
     }
 }

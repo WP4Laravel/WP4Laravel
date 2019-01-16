@@ -18,7 +18,7 @@ trait Seo
         }
 
         $meta = $this->meta->mapWithKeys(function ($item) {
-            return [$item['meta_key']=>$item['meta_value']];
+            return [$item['meta_key'] => $item['meta_value']];
         });
 
         // Determine most appropriate robots tag

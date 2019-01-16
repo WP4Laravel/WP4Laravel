@@ -33,10 +33,10 @@ class Flex
      */
     public function __construct(Model $post, $field)
     {
-        //	Save the post as an object variable
+        //  Save the post as an object variable
         $this->post = $post;
 
-        //	Get the Flexible Content collection from the post
+        //  Get the Flexible Content collection from the post
         $this->field = $this->getFieldData($field);
     }
 
@@ -53,21 +53,21 @@ class Flex
      */
     public function content()
     {
-        //	Return a collection
+        //  Return a collection
         $return = collect();
 
-        //	Does the field exists
+        //  Does the field exists
         if (!$this->field) {
             return $return;
         }
 
-        //	Create per component a path to the view
+        //  Create per component a path to the view
         return $this->field->map(function ($item) {
-            $item->view = "flex.".$item->type;
+            $item->view = "flex." . $item->type;
 
             return $item;
 
-            //	Filter out items, which have not a matching template partial
+            //  Filter out items, which have not a matching template partial
         })->filter(function ($item) {
             return View::exists($item->view);
         });
@@ -79,12 +79,12 @@ class Flex
      */
     public function render()
     {
-        //	Map over every item and reduce the result to a HTML
+        //  Map over every item and reduce the result to a HTML
         return $this->content()->reduce(function ($container, $item) {
-            $view = View::make($item->view, ['fields'=>$item->fields, 'post'=>$this->post]);
+            $view = View::make($item->view, ['fields' => $item->fields, 'post' => $this->post]);
 
-            //	Append the new result to the result of all previous items
-            return $container.$view->render();
+            //  Append the new result to the result of all previous items
+            return $container . $view->render();
         });
     }
 
@@ -94,7 +94,7 @@ class Flex
         return $this->content()->map(function ($item) {
             return collect($item->fields)->reduce(function ($container, $sub) {
                 if (is_string($sub) && !empty($sub)) {
-                    return $container.PHP_EOL.$sub;
+                    return $container . PHP_EOL . $sub;
                 }
             });
         });

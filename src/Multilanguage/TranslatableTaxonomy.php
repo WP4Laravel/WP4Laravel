@@ -17,7 +17,7 @@ class TranslatableTaxonomy
     {
         $ids = TermRelationship::on($this->connection)->join('term_taxonomy', 'term_taxonomy.term_taxonomy_id', '=', 'term_relationships.term_taxonomy_id')
                 ->join('terms', 'terms.term_id', '=', 'term_taxonomy.term_id')
-                ->where('terms.slug', 'pll_'.$language)
+                ->where('terms.slug', 'pll_' . $language)
                 ->get()->each(function ($item) {
                     $item->incrementing = false;
                 })->pluck('object_id')->all();

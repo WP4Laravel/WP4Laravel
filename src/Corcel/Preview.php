@@ -61,7 +61,6 @@ trait Preview
     {
         //  Get the latest revision of the post
         if ($revision = $this->revision->last()) {
-
             //  The revision has to have a updated date later then the original
             if ($revision->updated_at->lt($this->updated_at)) {
                 return $this;
@@ -72,7 +71,7 @@ trait Preview
 
             //  Fill the current post with the attributes of the revision
             //  That should be all
-            foreach ($revision->attributesToArray() as $key=>$value) {
+            foreach ($revision->attributesToArray() as $key => $value) {
                 // Do not copy the parent and the post_type
                 if ($key == 'post_parent' || $key == 'post_type') {
                     continue;
@@ -82,7 +81,6 @@ trait Preview
             }
 
             if ($status == 'draft') {
-
                 //  Id the original post is a draft, something odd happens
                 //  The default Wordpress customfields will be saved on the draft
                 //  Button the ACF fields will be saved on the revision
@@ -91,10 +89,10 @@ trait Preview
                 //  So the revision will have all meta data at that point
 
                 $metaOfDraft = $this->meta->mapWithKeys(function ($item) {
-                    return [$item->meta_key=>$item->meta_value];
+                    return [$item->meta_key => $item->meta_value];
                 })->toArray();
                 $metaOfRevision = $revision->meta->mapWithKeys(function ($item) {
-                    return [$item->meta_key=>$item->meta_value];
+                    return [$item->meta_key => $item->meta_value];
                 })->toArray();
 
                 //  Save the new meta to the revision
