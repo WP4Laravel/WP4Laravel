@@ -38,7 +38,7 @@ class Preview
 
         //  If no route defined in the config, abort the request
         if (!$route = config('corcel.preview.' . $post_type)) {
-            abort(404);
+            abort(404, 'No route configured for this post type');
         }
 
         //  Redirect to the show route of the post type, with __preview as unique slug
