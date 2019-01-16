@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  *     'full' => '/build/imgs/test1-wide.png',
  *     '220w' => '/build/imgs/test1-wide.png',
  *     '440w' => '/build/imgs/test1-square.png',
- * ]);dgisdhgosdhg
+ * ]);
  */
 class ImageFake
 {
