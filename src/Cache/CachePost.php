@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Cache;
  *
  * Usage: $test = (new PostCache($post))->remember("my_key", function() { return "my original data"; });
 **/
-class CachePost extends CacheContent
+class CachePost
 {
     protected $post;
+    private $tag = 'content';
 
     /**
      * Initilize the object with the current post
@@ -148,5 +149,10 @@ class CachePost extends CacheContent
 
         // If not return null, so the data will not returned from cache
         return null;
+    }
+
+    private function hasTags()
+    {
+        return Cache::getStore() instanceof \Illuminate\Cache\TaggableStore;
     }
 }
