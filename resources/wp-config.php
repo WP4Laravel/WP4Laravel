@@ -1,7 +1,5 @@
 <?php
 
-//	TODO: Clean up in a nice way
-
 require_once(__DIR__.'/../vendor/vlucas/phpdotenv/src/Dotenv.php');
 require_once(__DIR__.'/../vendor/vlucas/phpdotenv/src/Loader.php');
 require_once(__DIR__.'/../vendor/vlucas/phpdotenv/src/Validator.php');
