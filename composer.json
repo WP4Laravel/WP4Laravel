@@ -14,10 +14,10 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "laravel/framework": "5.6.*",
-        "jgrossi/corcel": "^2.5.0",
-        "corcel/acf": "^1.0.0",
-        "laravelium/feed": "^2.12"
+        "laravel/framework": "5.7.*",
+        "jgrossi/corcel": "^2.7",
+        "corcel/acf": "^1.1",
+        "laravelium/feed": "^3.0"
     },
     "extra": {
         "laravel": {
