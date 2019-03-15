@@ -6,7 +6,7 @@ use Corcel\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 
-class Gutenberg
+class GutenbergRender
 {
     /**
      * The parsed data
