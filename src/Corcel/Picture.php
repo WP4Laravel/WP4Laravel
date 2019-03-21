@@ -37,7 +37,11 @@ class Picture
         $crops = collect(unserialize($picture->attachment->meta->_wp_attachment_metadata)['sizes']);
 
         $picture->sources = $this->calculateSrcSets($picture, $breakpoints, $crops);
-        $crop = $picture->url;
+        if(config('picture.use_aws_storage')){
+            $crop= app('site')->s3($picture)->url();
+        }else {
+            $crop = $picture->url;
+        }
         switch (gettype($crop)) {
             case 'array':
                 $url = $crop['url'];
@@ -52,6 +56,7 @@ class Picture
                 $url = null;
                 break;
         }
+
         $picture->src = $url;
         $picture->alt = $picture->attachment->meta->_wp_attachment_image_alt;
 
@@ -77,26 +82,30 @@ class Picture
             $breakpoint->srcset = $crops->filter(function ($data, $crop_name) use ($crop) {
                 return strpos($crop_name, $crop) === 0;
             })->map(function ($data, $cropname) use ($picture) {
-                $crop = $picture->size($cropname);
-                switch (gettype($crop)) {
-                    case 'array':
-                        $url = $crop['url'];
-                        break;
-                    case 'string':
-                        $url = $crop;
-                        break;
-                    case 'object':
-                        $url = $crop->url;
-                        break;
-                    default:
-                        $url = null;
-                        break;
+
+                if(config('picture.use_aws_storage')){
+                    $url= app('site')->s3($picture)->size($cropname);
+                }else {
+                    $crop = $picture->size($cropname);
+                    switch (gettype($crop)) {
+                        case 'array':
+                            $url = $crop['url'];
+                            break;
+                        case 'string':
+                            $url = $crop;
+                            break;
+                        case 'object':
+                            $url = $crop->url;
+                            break;
+                        default:
+                            $url = null;
+                            break;
+                    }
                 }
                 $sizeArray = explode('_', $cropname);
                 $size = end($sizeArray);
                 return "$url $size";
             })->implode(', ');
-
             return $breakpoint;
         });
     }
