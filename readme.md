@@ -176,7 +176,8 @@ php artisan vendor:publish --provider="WP4Laravel\WP4LaravelServiceProvider"
 ### Storage
 
 All Wordpress media will be saved in the location of the Laravel Public storage. To make this work, run the following Artisan command to make a symbolic link in your webroot.
-
+If you wish to use Amazon S3 storage for your assets. You need to [[ DEFINE CONFIG FILE]] and specify if you want to use  Amazon S3 storage there.
+[[ DEFINE CONFIG FILE]] => check met Jakob hoe default mee te geven
 ```bash
 php artisan storage:link
 ```
@@ -808,3 +809,4 @@ class NewsController
     }
 }
 ```
+

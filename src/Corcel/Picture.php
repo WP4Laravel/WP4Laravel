@@ -11,7 +11,7 @@ class Picture
 {
     /**
      * Compose a view file with data used to render the correct srcsets, etc.
-     * @param  View   $view
+     * @param  View $view
      */
     public function compose(View $view)
     {
@@ -28,7 +28,7 @@ class Picture
 
     /**
      * Extend the picture object with extra fields to render a <picture> element
-     * @param  ThumbnailMeta|Image     $picture
+     * @param  ThumbnailMeta|Image $picture
      * @param  Collection $breakpoints
      * @return ThumbnailMeta|Image
      */
@@ -37,9 +37,9 @@ class Picture
         $crops = collect(unserialize($picture->attachment->meta->_wp_attachment_metadata)['sizes']);
 
         $picture->sources = $this->calculateSrcSets($picture, $breakpoints, $crops);
-        if(config('picture.use_aws_storage')){
-            $crop= app('site')->s3($picture)->url();
-        }else {
+        if (config('picture.use_aws_storage')) {
+            $crop = app('site')->s3($picture)->url();
+        } else {
             $crop = $picture->url;
         }
         switch (gettype($crop)) {
@@ -70,7 +70,7 @@ class Picture
      * @param  Collection $crops
      * @return Collection
      */
-    private function calculateSrcSets($picture, Collection $breakpoints, Collection $crops) : Collection
+    private function calculateSrcSets($picture, Collection $breakpoints, Collection $crops): Collection
     {
         return $breakpoints->map(function ($crop, $query) use ($picture, $crops) {
             // Create an object representation of this <source>
@@ -83,9 +83,9 @@ class Picture
                 return strpos($crop_name, $crop) === 0;
             })->map(function ($data, $cropname) use ($picture) {
 
-                if(config('picture.use_aws_storage')){
-                    $url= app('site')->s3($picture)->size($cropname);
-                }else {
+                if (config('picture.use_aws_storage')) {
+                    $url = app('site')->s3($picture)->size($cropname);
+                } else {
                     $crop = $picture->size($cropname);
                     switch (gettype($crop)) {
                         case 'array':
