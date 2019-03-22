@@ -176,8 +176,7 @@ php artisan vendor:publish --provider="WP4Laravel\WP4LaravelServiceProvider"
 ### Storage
 
 All Wordpress media will be saved in the location of the Laravel Public storage. To make this work, run the following Artisan command to make a symbolic link in your webroot.
-If you wish to use Amazon S3 storage for your assets. You need to [[ DEFINE CONFIG FILE]] and specify if you want to use  Amazon S3 storage there.
-[[ DEFINE CONFIG FILE]] => check met Jakob hoe default mee te geven
+
 ```bash
 php artisan storage:link
 ```
@@ -449,6 +448,8 @@ $page->url;
 
 ### Rendering \<picture\> tags
 WP4Laravel includes a helper template and ViewProvider to correctly render \<picture\>-tags with crops, etc. This works correctly for both ThumbnailMeta and Image-classes.
+If you wish to use Amazon S3 storage for your assets. You need to [[ DEFINE CONFIG FILE]] and specify if you want to use  Amazon S3 storage there.
+[[ DEFINE CONFIG FILE]] => check met Jakob hoe default mee te geven.
 
 #### Usage
 Crops must be named 'header_desktop_1x', 'header_mobile_2x', 'header_mobile_1x', 'header_mobile_14x' etc. Configure in Wordpress as follows:
