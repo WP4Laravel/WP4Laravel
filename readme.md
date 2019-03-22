@@ -448,8 +448,14 @@ $page->url;
 
 ### Rendering \<picture\> tags
 WP4Laravel includes a helper template and ViewProvider to correctly render \<picture\>-tags with crops, etc. This works correctly for both ThumbnailMeta and Image-classes.
-If you wish to use Amazon S3 storage for your assets. You need to [[ DEFINE CONFIG FILE]] and specify if you want to use  Amazon S3 storage there.
-[[ DEFINE CONFIG FILE]] => check met Jakob hoe default mee te geven.
+
+#### Configuration
+The included configuration file `config/picture.php` can be adapted to your project configuration. Copy the file to your project by executing:
+
+```bash
+php artisan vendor:publish --provider="WP4Laravel\WP4LaravelServiceProvider"
+```
+Note that this will copy the theme files, etc. as well. Change the included options to match your local URL, or the S3-setup. 
 
 #### Usage
 Crops must be named 'header_desktop_1x', 'header_mobile_2x', 'header_mobile_1x', 'header_mobile_14x' etc. Configure in Wordpress as follows:
