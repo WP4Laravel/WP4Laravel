@@ -9,7 +9,6 @@ class Parser
     {
         $parsedTokens = [];
         $countParsedTokens = 0;
-        $rawData = [];
         $matches = null;
 
         $tokens = explode("\n", $input);
@@ -60,16 +59,19 @@ class Parser
 
             // we have no more tokens.
             if (0 === $has_match) {
+                if (!empty($token)) {
+                    if (!isset($parsedTokens[$countParsedTokens]['data'])) {
+                            $parsedTokens[$countParsedTokens]['data'] = '';
+                    }
 
-                if (!isset($parsedTokens[$countParsedTokens]['data'])) {
-                    $parsedTokens[$countParsedTokens]['data'] = '';
+                    $parsedTokens[$countParsedTokens]['data'] .= $token;
+
                 }
-                $parsedTokens[$countParsedTokens]['data'] .= $token;
 
-                $rawData[] = $token;
                 continue;
 
             }
+
 
 
         }
