@@ -41,7 +41,7 @@ class GutenbergRender
     /**
      * Render all components and return as HTML
      */
-    public function render() : string
+    public function render() 
     {
         //  Map over every item and reduce the result to a HTML
         return $this->content()->reduce(function ($container, $item) {
