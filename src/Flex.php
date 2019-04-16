@@ -75,6 +75,10 @@ class Flex
      */
     public function render() : string
     {
+        if ($this->content()->isEmpty()) {
+            return '';
+        }
+
         //  Map over every item and reduce the result to a HTML
         return $this->content()->reduce(function ($container, $item) {
             $view = View::make($item->view, ['fields' => $item->fields, 'post' => $this->post]);
