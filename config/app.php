@@ -2,6 +2,29 @@
 
 return [
     /*
+    |-------------------------------------------
+    | API Debugging
+    |-------------------------------------------
+    |
+    | Show debugbar data in API json output.
+    */
+
+    'debug_api' => env('APP_DEBUG_API', false),
+
+    /*
+    |-------------------------------------------
+    | API Version
+    |-------------------------------------------
+    |
+    | This value is the version of your api.
+    | It's used when there's no specified
+    | version on the routes, so it will take this
+    | as the default, or current.
+    */
+
+    'api_latest' => env('API_LATEST_VERSION'),
+
+    /*
     |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
@@ -221,5 +244,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
+        'OutputHelper' => App\Helpers\OutputHelper::class,
     ],
 ];

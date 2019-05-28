@@ -62,9 +62,11 @@
         "laravel/tinker": "^1.0",
         "league/flysystem-aws-s3-v3": "^1.0",
         "wp4laravel/wp4laravel": "^0.11.1",
-        "wp4laravel/wp4laravel-plugin": "^0.2.0"
+        "wp4laravel/wp4laravel-plugin": "^0.2.0",
+        "wpackagist-plugin/polylang": "^2.5"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.2",
         "beyondcode/laravel-dump-server": "^1.0",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
