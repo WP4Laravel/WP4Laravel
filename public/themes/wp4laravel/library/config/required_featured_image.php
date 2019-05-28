@@ -6,7 +6,7 @@
 function wpds_check_thumbnail($post_id)
 {
     // change to any custom post type
-    if (!in_array(get_post_type($post_id), ['exhibition'])) {
+    if (!in_array(get_post_type($post_id), ['exhibition', 'artwork'])) {
         return;
     }
 
