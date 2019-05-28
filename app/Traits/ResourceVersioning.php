@@ -15,14 +15,10 @@ trait ResourceVersioning
         // Get's the request's api version, or the latest if undefined
         $v = config('app.api_version', config('app.api_latest'));
 
-        // dd($v);
-
         $className = $this->getResourceClassname(
             $resourceName,
             str_replace('.', '_', $v)
         );
-
-        // dd($className);
 
         if (!class_exists($className)) {
             $className = $this->getResourceClassname(
@@ -30,8 +26,6 @@ trait ResourceVersioning
                 config('app.api_latest')
             );
         }
-
-        // dd($className);
 
         $class = new \ReflectionClass($className);
         return $class->newInstanceArgs($args);

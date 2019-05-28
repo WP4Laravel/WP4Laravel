@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Tour;
+use App\Models\Exhibition;
 use App\Services\ZipResource;
 use App\Services\CacheContent;
-use App\Models\Exhibition;
 
 class ExhibitionController extends Controller
 {
