@@ -26,7 +26,7 @@ class Post extends Corcel
     public function getPostImages($size = 'header')
     {
         if (!$this->thumbnail) {
-            if (($this->postType == 'tourhighlight' && (bool)$this->meta->has_detail) || ($this->postType != 'tourhighlight')) {
+            if ($this->postType == 'exhibition' && $this->postType == 'artwork') {
                 abort(500, 'This item has no featured image! [' . $this->postType . ': ' . $this->ID . ', ' . $this->title . ']');
             }
         }
