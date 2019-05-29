@@ -122,6 +122,15 @@ add_filter('jpeg_quality', function () {
 }, 10, 2);
 
 /*
+ * Remove pages link from admin.
+ */
+function page_remove()
+{
+    remove_menu_page('edit.php?post_type=page');
+}
+add_action('admin_menu', 'page_remove');
+
+/*
  * Remove post link from admin.
  */
 function post_remove()
