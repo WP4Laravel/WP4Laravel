@@ -2,6 +2,9 @@
 
 namespace App\Http\Resources\Api\v1_0;
 
+use Route;
+use WP4Laravel\Cache\CachePost;
+
 class Artist extends BaseResource
 {
     /**
@@ -12,6 +15,13 @@ class Artist extends BaseResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $api_version = config('app.api_version');
+        $route = Route::currentRouteName();
+
+        $data = (new CachePost($this->resource))->forever("artists.{$api_version}.{$route}", function ($post) use ($request) {
+            return parent::toArray($request);
+        });
+
+        return $data;
     }
 }
