@@ -1,21 +1,21 @@
 <?php
 
-add_action('save_post', 'check_tourhighlight_parent');
+add_action('save_post', 'check_exhibition_parent');
 
-function check_tourhighlight_parent($post_id)
+function check_exhibition_parent($post_id)
 {
     $post_type = get_post_type($post_id);
 
-    if ('tour' === $post_type) {
+    if ('exhibition' === $post_type) {
         update_post_meta($post_id, 'zip_size', null);
     }
 
-    if ('tourhighlight' === $post_type) {
+    if ('artwork' === $post_type) {
         $parent_posts = get_posts([
-            'post_type' => 'tour',
+            'post_type' => 'exhibition',
             'meta_query' => [
                 [
-                    'key' => 'tourhighlight_collection',
+                    'key' => 'artworks',
                     'value' => '"' . $post_id . '"',
                     'compare' => 'LIKE'
                 ]
