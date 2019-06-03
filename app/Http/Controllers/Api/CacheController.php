@@ -5,9 +5,6 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
 
-/**
- * Api for fetching Wordpress Categories
- */
 class CacheController extends Controller
 {
     /**
