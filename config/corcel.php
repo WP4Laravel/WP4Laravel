@@ -31,7 +31,10 @@ return [
     */
 
     'post_types' => [
-        //        'video' => App\Models\Video::class,
+        'artist' => App\Models\Artist::class,
+        'artwork' => App\Models\Artwork::class,
+        'exhibition' => App\Models\Exhibition::class,
+        'menulink' => App\Models\Menulink::class,
     ],
 
     /*
