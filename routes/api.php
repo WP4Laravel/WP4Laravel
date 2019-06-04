@@ -7,7 +7,7 @@
 */
 
 Route::group([
-    'middleware' => ['api', 'api.version:1.0'],
+    'middleware' => ['api', 'api.version:1.0', 'json.profiler'],
     'prefix' => 'api/v1.0',
 ], function () {
     require base_path('routes/api_v1.0.php');
