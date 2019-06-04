@@ -19,7 +19,7 @@ class Artwork extends BaseResource
 
         $route = Route::currentRouteName();
 
-        $data = (new CachePost($this->resource))->forever("artworks.{$api_version}.{$route}", function ($post) use ($request) {
+        $data = (new CachePost($this->resource))->forever("api.{$api_version}.artworks.{$route}", function ($post) use ($request) {
             return parent::toArray($request);
         });
 

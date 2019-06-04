@@ -19,7 +19,7 @@ class Menulink extends BaseResource
 
         $route = Route::currentRouteName();
 
-        $data = (new CachePost($this->resource))->forever("menulinks.{$api_version}.{$route}", function ($post) use ($request) {
+        $data = (new CachePost($this->resource))->forever("api.{$api_version}.menulinks.{$route}", function ($post) use ($request) {
             return parent::toArray($request);
         });
 

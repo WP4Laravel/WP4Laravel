@@ -19,7 +19,7 @@ class Artist extends BaseResource
 
         $route = Route::currentRouteName();
 
-        $data = (new CachePost($this->resource))->forever("artists.{$api_version}.{$route}", function ($post) use ($request) {
+        $data = (new CachePost($this->resource))->forever("api.{$api_version}.artists.{$route}", function ($post) use ($request) {
             return parent::toArray($request);
         });
 

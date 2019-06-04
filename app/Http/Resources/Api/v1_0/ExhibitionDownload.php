@@ -19,7 +19,7 @@ class ExhibitionDownload extends BaseResource
 
         $route = Route::currentRouteName();
 
-        $data = (new CachePost($this->resource))->forever("exhibitiondownload.{$api_version}.{$route}", function ($post) use ($request) {
+        $data = (new CachePost($this->resource))->forever("api.{$api_version}.exhibitiondownloads.{$route}", function ($post) use ($request) {
             $attributes = parent::toArray($request);
 
             $attributes = array_merge($attributes, [
