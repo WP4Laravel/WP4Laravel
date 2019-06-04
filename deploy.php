@@ -9,12 +9,12 @@ set('application', '[PROJECTNAME]');
 set('repository', 'git@github.com:IN10/[PROJECT_GIT_NAME].git');
 
 // Define stages
-// host('test')
-//   ->hostname('[projectname].t[number].in10projecten.nl')
-//   ->user('forge')
-//   ->stage('test')
-//   ->set('keep_releases', 2)
-//   ->set('deploy_path', '~/[project-URL]');
+host('test')
+    ->hostname('fotomuseum-api.t05.in10projecten.nl')
+    ->user('forge')
+    ->stage('test')
+    ->set('keep_releases', 2)
+    ->set('deploy_path', '~/fotomuseum-api.t05.in10projecten.nl');
 
 // host('acceptance')
 //   ->hostname('[host]')
