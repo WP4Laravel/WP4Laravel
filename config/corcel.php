@@ -31,6 +31,7 @@ return [
     */
 
     'post_types' => [
+        'activity' => App\Models\Activity::class,
         'artist' => App\Models\Artist::class,
         'artwork' => App\Models\Artwork::class,
         'exhibition' => App\Models\Exhibition::class,
