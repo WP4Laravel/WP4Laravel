@@ -10,8 +10,9 @@ class ArtworkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @param string $language
+     * @return \Illuminate\Http\Resources\Json\Resource
      */
     public function show(string $language, int $id)
     {

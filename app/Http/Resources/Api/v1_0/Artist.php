@@ -16,6 +16,7 @@ class Artist extends BaseResource
     public function toArray($request)
     {
         $api_version = config('app.api_version');
+
         $route = Route::currentRouteName();
 
         $data = (new CachePost($this->resource))->forever("artists.{$api_version}.{$route}", function ($post) use ($request) {

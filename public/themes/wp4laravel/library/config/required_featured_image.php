@@ -33,7 +33,6 @@ function wpds_thumbnail_error()
     }
 }
 
-// global $pagenow;
 if ($pagenow == 'post-new.php' || $pagenow == 'post.php') {
     add_action('save_post', 'wpds_check_thumbnail');
     add_action('admin_notices', 'wpds_thumbnail_error');

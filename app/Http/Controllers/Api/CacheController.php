@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Debugbar;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
 
@@ -14,9 +15,10 @@ class CacheController extends Controller
      */
     public function __invoke()
     {
-        \Debugbar::disable();
+        // Temp disable debugbar
+        Debugbar::disable();
 
-        //Clearing all cache
+        // Clearing all cache
         Cache::flush();
 
         return 'The cache is cleared';

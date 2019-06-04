@@ -11,7 +11,8 @@ class MenulinkController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param string $language
+     * @return \Illuminate\Http\Resources\Json\ResourceCollection
      */
     public function index(string $language)
     {

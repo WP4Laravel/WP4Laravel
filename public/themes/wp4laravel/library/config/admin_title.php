@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Show APP_NAME and VERSION in toolbar
+ */
 function my_edit_toolbar($wp_toolbar)
 {
     $wp_toolbar->remove_node('site-name');
@@ -11,5 +14,4 @@ function my_edit_toolbar($wp_toolbar)
     ];
     $wp_toolbar->add_node($args);
 }
-
 add_action('admin_bar_menu', 'my_edit_toolbar', 49);

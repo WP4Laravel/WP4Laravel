@@ -1,7 +1,8 @@
 <?php
 
-add_action('save_post', 'check_exhibition_parent');
-
+/**
+ * Check if exhibition or linked artworks are updated and zip_size must be reset
+ */
 function check_exhibition_parent($post_id)
 {
     $post_type = get_post_type($post_id);
@@ -36,3 +37,4 @@ function check_exhibition_parent($post_id)
 
     return;
 }
+add_action('save_post', 'check_exhibition_parent', 9);

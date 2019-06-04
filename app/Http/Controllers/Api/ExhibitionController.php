@@ -13,7 +13,7 @@ class ExhibitionController extends Controller
      * Display a listing of the resource.
      *
      * @param string $language
-     * @return \Illuminate\Http\Resources\Json\Resource
+     * @return \Illuminate\Http\Resources\Json\ResourceCollection
      */
     public function index(string $language)
     {
