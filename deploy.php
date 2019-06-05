@@ -5,8 +5,8 @@ namespace Deployer;
 require_once __DIR__ . '/vendor/in10/deployment/recipes/in10.recipe.php';
 
 // Configuration
-set('application', 'Fotomuseum-API');
-set('repository', 'git@github.com:IN10/Fotomuseum-API.git');
+set('application', 'Nederlands-Fotomuseum-API');
+set('repository', 'git@github.com:IN10/Nederlands-Fotomuseum-API.git');
 
 // Define stages
 host('test')
