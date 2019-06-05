@@ -8,11 +8,11 @@ use Closure;
 class CacheContent
 {
     /**
-     * Default minutes for caching
+     * Default seconds for caching
      *
      * @var integer
      */
-    protected $limit = 1440;
+    protected $limit = 3600;
 
     /**
      * Get an item from the cache, or execute the given Closure and store the result.
