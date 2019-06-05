@@ -24,9 +24,9 @@ class ActivityController extends Controller
                 ->language($language)
                 ->hasMeta('date_start', Carbon::now()->format('Ymd'), '<=')
                 ->hasMeta('date_end', Carbon::now()->format('Ymd'), '>=')
-                ->get()->sortBy(function ($post, $key) {
+                ->get()->sortByDesc(function ($post, $key) {
                     return $post->meta->date_start;
-                });
+                })->take(4);
 
             return $this->resource('Api\ActivityCollection', $activities);
         }, ['activities']);
