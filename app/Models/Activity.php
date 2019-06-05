@@ -19,8 +19,8 @@ class Activity extends Post
             'desciption' => $this->meta->description,
             'url' => $this->meta->url,
             'url_calendar' => $this->meta->url_calendar,
-            'date_start' => $this->acf->date_start->toIso8601String(),
-            'date_end' => ($this->meta->date_end) ? $this->acf->date_end->toIso8601String() : null,
+            'date_start' => $this->acf->date_start->format('d-m-Y'),
+            'date_end' => ($this->meta->date_end) ? $this->acf->date_end->format('d-m-Y') : null,
         ];
     }
 
