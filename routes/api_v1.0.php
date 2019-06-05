@@ -6,7 +6,6 @@ Route::group([
 ], function () {
     // Activities
     Route::get('activities', 'Api\ActivityController@index')->name('activity_index');
-    Route::get('activities/{id}', 'Api\ActivityController@show')->name('activity_show');
     // Artworks
     Route::get('artworks/{id}', 'Api\ArtworkController@show')->name('artwork_show');
     // Exhibitions
