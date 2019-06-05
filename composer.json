@@ -63,7 +63,8 @@
         "league/flysystem-aws-s3-v3": "^1.0",
         "wp4laravel/wp4laravel": "^0.11.1",
         "wp4laravel/wp4laravel-plugin": "^0.2.0",
-        "wpackagist-plugin/polylang": "^2.5"
+        "wpackagist-plugin/polylang": "^2.5",
+        "wpackagist-plugin/post-types-order": "1.9.4.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
