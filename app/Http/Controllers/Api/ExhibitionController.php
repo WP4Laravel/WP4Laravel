@@ -31,8 +31,12 @@ class ExhibitionController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Resources\Json\Resource
      */
-    public function show(string $language, int $id)
+    public function show(string $language, int $id = null)
     {
+        if (!$id) {
+            $id = (int)config('app.exhibition_id');
+        }
+
         $exhibition = Exhibition::published()->language($language)->findOrFail($id);
 
         return $this->resource('Api\Exhibition', $exhibition);
@@ -45,8 +49,12 @@ class ExhibitionController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Resources\Json\Resource
      */
-    public function download(string $language, int $id)
+    public function download(string $language, int $id = null)
     {
+        if (!$id) {
+            $id = (int)config('app.exhibition_id');
+        }
+
         ini_set('memory_limit', '512M');
 
         $exhibition = Exhibition::published()->language($language)->findOrFail($id);

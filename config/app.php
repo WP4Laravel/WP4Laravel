@@ -3,6 +3,16 @@
 return [
     /*
     |-------------------------------------------
+    | DEFAULT EXHIBITION ID
+    |-------------------------------------------
+    |
+    | This exhibition will be used as default.
+    */
+
+    'exhibition_id' => env('EXHIBITION_ID'),
+
+    /*
+    |-------------------------------------------
     | API Debugging
     |-------------------------------------------
     |
