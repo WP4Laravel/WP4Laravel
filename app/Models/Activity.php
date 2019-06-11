@@ -18,10 +18,33 @@ class Activity extends Post
             'name' => $this->title,
             'desciption' => $this->meta->description,
             'url' => $this->meta->url,
-            'url_calendar' => $this->meta->url_calendar,
             'date_start' => $this->acf->date_start->format('d-m-Y'),
             'date_end' => ($this->meta->date_end) ? $this->acf->date_end->format('d-m-Y') : null,
+            'calendar_event' => $this->getCalendarEvent(),
         ];
+    }
+
+    /**
+     * Create calender event
+     *
+     * @return array
+     */
+    private function getCalendarEvent()
+    {
+        $event = [
+            'date_start' => $this->acf->date_start->format('d-m-Y'),
+            'date_end' => ($this->meta->date_end) ? $this->acf->date_end->format('d-m-Y') : null,
+            'all_day' => (bool)$this->meta->date_all_day,
+        ];
+
+        if (!(bool)$this->meta->date_all_day) {
+            $event = array_merge($event, [
+                'time_start' => ((bool)$this->meta->date_all_day) ? null : $this->acf->date_time_start->format('H:i'),
+                'time_end' => ((bool)$this->meta->date_all_day) ? null : $this->acf->date_time_end->format('H:i'),
+            ]);
+        }
+
+        return $event;
     }
 
     /**
