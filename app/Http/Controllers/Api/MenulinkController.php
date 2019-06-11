@@ -20,6 +20,6 @@ class MenulinkController extends Controller
 
         return CacheContent::remember("api.{$api_version}.{$language}.menulinks", function () use ($language) {
             return $this->resource('Api\MenulinkCollection', Menulink::published()->language($language)->orderby('menu_order')->get());
-        }, ['menulinks']);
+        }, ['menulink']);
     }
 }

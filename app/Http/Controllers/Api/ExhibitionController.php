@@ -21,7 +21,7 @@ class ExhibitionController extends Controller
 
         return CacheContent::remember("api.{$api_version}.{$language}.exhibitions", function () use ($language) {
             return $this->resource('Api\ExhibitionCollection', Exhibition::published()->language($language)->orderby('post_title')->get());
-        }, ['exhibitions']);
+        }, ['exhibition']);
     }
 
     /**

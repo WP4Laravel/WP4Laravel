@@ -33,6 +33,17 @@ class CacheContent
         return Cache::remember($name, $self->limit, $callback);
     }
 
+    public static function flush(array $tags = null)
+    {
+        $self = new static();
+
+        if ($self->supportTags() && $tags) {
+            return Cache::tags($tags)->flush();
+        }
+
+        return Cache::flush();
+    }
+
     /**
      * Check if cache tags are supported.
      *

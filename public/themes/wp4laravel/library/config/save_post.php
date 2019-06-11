@@ -37,4 +37,18 @@ function check_exhibition_parent($post_id)
 
     return;
 }
-add_action('save_post', 'check_exhibition_parent', 9);
+add_action('save_post', 'check_exhibition_parent', 8);
+
+/**
+ * Clear cache based on post_type
+ */
+function check_cache_content($post_id)
+{
+    $post_type = get_post_type($post_id);
+
+    $url = env('APP_URL') . "/api/cache/{$post_type}?action=clear_cache";
+    $response = wp_remote_get($url, ['sslverify' => false]);
+
+    return;
+}
+add_action('save_post', 'check_cache_content', 9);

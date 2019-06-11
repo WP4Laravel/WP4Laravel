@@ -3,24 +3,42 @@
 namespace App\Http\Controllers\Api;
 
 use Debugbar;
-use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
+use App\Services\CacheContent;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class CacheController extends Controller
 {
+    protected $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
     /**
      * All request come into the invoke method and returns all categories
      *
      * @return Response
      */
-    public function __invoke()
+    public function __invoke(string $tag = null)
     {
         // Temp disable debugbar
         Debugbar::disable();
 
-        // Clearing all cache
-        Cache::flush();
+        if ($this->request->get('action') === 'clear_cache') {
+            if ($tag) {
+                // Clearing cache for given tag
+                CacheContent::flush([$tag]);
+                return "The cache is cleared for tag {$tag}";
+            } else {
+                // Clearing all cache
+                Cache::flush();
+                return 'The cache is cleared for all content';
+            }
+        }
 
-        return 'The cache is cleared';
+        return 'No cache changes';
     }
 }

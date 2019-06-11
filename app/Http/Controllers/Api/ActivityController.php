@@ -29,6 +29,6 @@ class ActivityController extends Controller
                 })->take(4);
 
             return $this->resource('Api\ActivityCollection', $activities);
-        }, ['activities']);
+        }, ['activity']);
     }
 }
