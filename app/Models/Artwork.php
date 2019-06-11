@@ -17,6 +17,7 @@ class Artwork extends Post
             'id' => $this->ID,
             'title' => $this->title,
             'images' => $this->getPostImages(),
+            'physical_width' => floatval($this->meta->physical_width) / 100,
             'content' => $this->getContent($this->meta->type),
         ];
     }
