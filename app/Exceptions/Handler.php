@@ -46,6 +46,28 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if (!config('app.debug') && strpos($request->getUri(), '/api/v') !== false) {
+            // create output
+            $return = [
+                'error' => [
+                    'errorType' => (new \ReflectionClass($exception))->getShortName(),
+                    'message' => $exception->getMessage(),
+                ]
+            ];
+
+            // set default response: 400
+            $status = 400;
+
+            // is exception of instance of HttpException
+            if ($this->isHttpException($exception)) {
+                // get the HTTP status code
+                $status = $exception->getStatusCode();
+            }
+
+            // return JSON with the output array and status code
+            return response()->json($return, $status);
+        }
+
         return parent::render($request, $exception);
     }
 }
