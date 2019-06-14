@@ -3,7 +3,6 @@
 namespace WP4Laravel\Corcel;
 
 use Illuminate\Http\Request;
-use WP4Laravel\Cache\CacheContent;
 
 /**
  * Enable the preview function of Wordpress
@@ -43,9 +42,6 @@ trait Preview
 
             //  Overwrite the post object with the preview object
             $post = $preview;
-
-            //  Flush the content cache
-            CacheContent::flush();
         }
 
         return $post;
