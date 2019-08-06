@@ -79,7 +79,7 @@ The basis of WP4Laravel is just a fresh Laravel install. We add three open sourc
 Start a fresh Laravel 5.4+ install
 
 ```bash
-laravel new my-wp-project
+composer create-project --prefer-dist laravel/laravel:"5.7.*" my-wp-project
 ```
 
 ### Gitignore
