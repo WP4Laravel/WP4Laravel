@@ -123,7 +123,6 @@ Add the following packages to your installation by executing on the command-line
 
 ```bash
 composer require "composer/installers"
-composer require "composer/installers"
 composer require "johnpbloch/wordpress"
 composer require "wp4laravel/wp4laravel"
 composer require "wp4laravel/wp4laravel-plugin"
