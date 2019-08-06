@@ -1,8 +1,12 @@
 <?php
 
-require_once(__DIR__.'/../vendor/vlucas/phpdotenv/src/Dotenv.php');
-require_once(__DIR__.'/../vendor/vlucas/phpdotenv/src/Loader.php');
-require_once(__DIR__.'/../vendor/vlucas/phpdotenv/src/Validator.php');
+// Require the dotenv package using a custom autoloader
+// (composer autoloading doesn't work here, because the laravel helpers conflict with wordpress)
+$vendor = dirname(__DIR__) . '/vendor/';
+require_once $vendor . 'aura/autoload/autoload.php';
+$loader = new \Aura\Autoload\Loader();
+$loader->register();
+$loader->addPrefix('Dotenv', $vendor . 'vlucas/phpdotenv/src');
 
 function env(string $key, $default = null)
 {
