@@ -122,11 +122,7 @@ Add an 'extra' section to the composer.json, to determine where to install Wordp
 Add the following packages to your installation by executing on the command-line:
 
 ```bash
-composer require "composer/installers"
-composer require "johnpbloch/wordpress"
-composer require "wp4laravel/wp4laravel"
-composer require "wp4laravel/wp4laravel-plugin"
-composer update
+composer require "composer/installers" "johnpbloch/wordpress" "wp4laravel/wp4laravel" "wp4laravel/wp4laravel-plugin"
 ```
 
 ### Environment file.
