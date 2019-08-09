@@ -8,6 +8,6 @@ class RSS extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'wp4laravel::rss';
+        return \WP4Laravel\RSS::class;
     }
 }
