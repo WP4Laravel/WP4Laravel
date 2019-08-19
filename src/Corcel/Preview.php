@@ -2,6 +2,7 @@
 
 namespace WP4Laravel\Corcel;
 
+use Corcel\Model\Post;
 use Illuminate\Http\Request;
 
 /**
@@ -11,11 +12,8 @@ trait Preview
 {
     /**
      * Get the requested post based on the slug or get the preview of a post
-     * @param  Request $request
-     * @param  string $slug
-     * @return Corcel\Model\Post
      */
-    public static function publishedOrPreview(Request $request, $slug)
+    public static function publishedOrPreview(Request $request, string $slug) : self
     {
         //  Determine the ID of the post. For pages this is page_id
         //  For all other post types is this 'p'
@@ -29,6 +27,10 @@ trait Preview
                         ->firstOrFail();
         } else {
             $post = static::current($slug);
+        }
+
+        if (!$post instanceof Post) {
+            return null;
         }
 
         //  This can be used for all post types
