@@ -53,9 +53,8 @@ trait Preview
 
     /**
      * Get the preview of a post
-     * @return Corcel\Model\Post
      */
-    public function getPreview()
+    public function getPreview() : self
     {
         //  Get the latest revision of the post
         if ($revision = $this->revision->last()) {
