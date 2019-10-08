@@ -40,7 +40,7 @@ class Picture
         if (config('picture.use_aws_storage')) {
             $crop = app('site')->s3($picture)->url();
         } else {
-            $crop = $picture->url;
+            $crop = $picture->attachment->url;
         }
         switch (gettype($crop)) {
             case 'array':
