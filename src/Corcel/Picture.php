@@ -80,7 +80,7 @@ class Picture
             // Filter all crops to find the ones we use in this srcset
             // Transform those crops in a valid srcset-attribute
             $breakpoint->srcset = $crops->filter(function ($data, $crop_name) use ($crop) {
-                return strpos($crop_name, $crop) === 0;
+                return preg_match('/^' . preg_quote($crop) . '_[a-z0-9]+$/i', $crop_name);
             })->map(function ($data, $cropname) use ($picture) {
 
                 if (config('picture.use_aws_storage')) {
