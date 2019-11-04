@@ -12,6 +12,7 @@ namespace WP4Laravel;
 use Illuminate\Support\Facades\Storage;
 use Corcel\Acf\Field\Image;
 use Corcel\Acf\Field\File;
+use Corcel\Model\Attachment;
 use Corcel\Model\Meta\ThumbnailMeta;
 
 class S3Media
@@ -25,7 +26,6 @@ class S3Media
      * Stores the S3 meta data from the media object
      */
     protected $s3info;
-
 
     /**
      * Static method, to create a cleaner way of making an instance
@@ -46,13 +46,14 @@ class S3Media
         //  Save the media object as object property
         $this->media = $media;
 
-
         //  Check if the given media object is an instance of
         //  Image (corcel/acf) or ThumbnailMeta (corcel/corcel)
         if ($media instanceof Image
             || $media instanceof File
             || $media instanceof ThumbnailMeta) {
             $this->s3info = unserialize($this->media->attachment->meta->amazonS3_info);
+        } elseif ($media instanceof Attachment) {
+            $this->s3info = unserialize($this->media->meta->amazonS3_info);
         }
     }
 
@@ -107,11 +108,15 @@ class S3Media
         }
 
         //  Get all available sizes of the file
-        $sizes = unserialize($this->media->attachment->meta->_wp_attachment_metadata)['sizes'];
+        if (isset($this->media->attachment->meta)) {
+            $sizes = unserialize($this->media->attachment->meta->_wp_attachment_metadata)['sizes'];
+        } else {
+            $sizes = unserialize($this->media->meta->_wp_attachment_metadata)['sizes'];
+        }
 
         //  Check if the requested size exists or the requested size is the original
         //  If so return the url of the original file
-        if (! isset($sizes[$size]) || $size  == 'full') {
+        if (!isset($sizes[$size]) || $size == 'full') {
             return $this->url();
         }
 
