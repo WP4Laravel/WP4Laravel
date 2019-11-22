@@ -13,7 +13,7 @@ trait Preview
     /**
      * Get the requested post based on the slug or get the preview of a post
      */
-    public static function publishedOrPreview(Request $request, string $slug) : self
+    public static function publishedOrPreview(Request $request, string $slug) : ?self
     {
         //  Determine the ID of the post. For pages this is page_id
         //  For all other post types is this 'p'
