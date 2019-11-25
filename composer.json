@@ -4,8 +4,13 @@
     "type": "laravel-package",
     "license": "MIT",
     "authors": [
-        { "name": "Marco Boom" },
-        { "name": "Jakob Buis", "email": "jakob@jakobbuis.nl" }
+        {
+            "name": "Marco Boom"
+        },
+        {
+            "name": "Jakob Buis",
+            "email": "jakob@jakobbuis.nl"
+        }
     ],
     "autoload": {
         "psr-4": {
@@ -18,7 +23,8 @@
         "laravel/framework": "5.7.*",
         "jgrossi/corcel": "^2.7",
         "corcel/acf": "^1.1",
-        "laravelium/feed": "^3.0"
+        "laravelium/feed": "^3.0",
+        "johnpbloch/wordpress": "^5.3"
     },
     "extra": {
         "laravel": {
@@ -27,5 +33,4 @@
             ]
         }
     }
-
 }
