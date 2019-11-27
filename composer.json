@@ -30,7 +30,7 @@
         "laravelium/feed": "^3.0"
     },
     "conflict": {
-        "johnpbloch/wordpress": "<5.0"
+        "johnpbloch/wordpress": "<5.3"
     },
     "extra": {
         "laravel": {
