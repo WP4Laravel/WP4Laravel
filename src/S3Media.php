@@ -14,6 +14,7 @@ use Corcel\Acf\Field\Image;
 use Corcel\Acf\Field\File;
 use Corcel\Model\Attachment;
 use Corcel\Model\Meta\ThumbnailMeta;
+use WP4Laravel\Corcel\OffloadedMedia;
 
 class S3Media
 {
@@ -47,13 +48,17 @@ class S3Media
         $this->media = $media;
 
         //  Check if the given media object is an instance of
-        //  Image (corcel/acf) or ThumbnailMeta (corcel/corcel)
+        //  Image (corcel/acf/field), File (corcel/acf/field), ThumbnailMeta (Corcel\Model\Meta) or Attachment (Corcel\Model)
         if ($media instanceof Image
             || $media instanceof File
             || $media instanceof ThumbnailMeta) {
-            $this->s3info = unserialize($this->media->attachment->meta->amazonS3_info);
+            if ($media = OffloadedMedia::findById($this->media->attachment)) {
+                $this->s3info = $media->getAmazonS3Info();
+            }
         } elseif ($media instanceof Attachment) {
-            $this->s3info = unserialize($this->media->meta->amazonS3_info);
+            if ($media = OffloadedMedia::findById($this->media)) {
+                $this->s3info = $media->getAmazonS3Info();
+            }
         }
     }
 
