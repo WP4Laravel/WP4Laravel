@@ -25,7 +25,7 @@
     "require": {
         "aura/autoload": "^2.0",
         "laravel/framework": "7.*",
-        "jgrossi/corcel": "^4.0",
+        "jgrossi/corcel": "^3.0",
         "corcel/acf": "^2.0",
         "laravelium/feed": "^6.0"
     },
