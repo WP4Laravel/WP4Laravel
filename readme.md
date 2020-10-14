@@ -22,6 +22,8 @@
 - [Wordpress configuration](#wordpress-configuration)
 - [Add plugins](#add-plugins)
   * [How do I use it?](#how-do-i-use-it)
+- [Yoast Premium](#yoast-premium)
+  * [Redirects](#redirects)
 - [Multilanguage](#multilanguage)
   * [Translatable models](#translatable-models)
   * [Translatable taxonomies](#translatable-taxonomies)
@@ -242,6 +244,22 @@ composer require wpackagist-plugin/advanced-custom-fields
 Plugins are installed to `public/plugins`.
 
 Please visit [WordPress Packagist](https://wpackagist.org) website for more information and examples.
+
+## Yoast Premium
+WP4Laravel has some support for key features of Yoast Premium, mostly rendering SEO tags and following redirects.
+
+### Redirects
+Redirect can enabled by adding the included middleware to the middleware-stack. You probably want to do this in the `web` middleware group in `app/Http/Kernel.php`:
+```php
+protected $middlewareGroups = [
+    'web' => [
+        // ... existing middleware
+        \WP4Laravel\Yoast\Redirects\Middleware::class,
+    ],
+];
+```
+
+The middleware will automatically check if the request should be redirected, and return the redirect instead of handling the original request. Note that the redirect is handled in middleware and takes precedence over any existing routing. Take care not to define redirects over critical pages in your website.
 
 ## Multilanguage
 WP4Laravel contains various options to work with multilanguage-enabled websites. These solutions are based on using the free version of Poylang ([plugin](https://wordpress.org/plugins/polylang/), [wpackagist](https://wpackagist.org/search?q=polylang&type=any&search=)).
