@@ -46,7 +46,5 @@ class WP4LaravelServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('wp4laravel::menubuilder', \WP4Laravel\MenuBuilder::class);
-
-        app('router')->aliasMiddleware('redirects', \WP4Laravel\Yoast\Redirects\Middleware::class);
     }
 }
