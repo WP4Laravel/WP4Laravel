@@ -24,10 +24,10 @@
     "minimum-stability": "stable",
     "require": {
         "aura/autoload": "^2.0",
-        "laravel/framework": "5.7.*",
-        "jgrossi/corcel": "^2.7",
-        "corcel/acf": "^1.1",
-        "laravelium/feed": "^3.0"
+        "laravel/framework": "7.*",
+        "jgrossi/corcel": "^3.0",
+        "corcel/acf": "^2.0",
+        "laravelium/feed": "^6.0"
     },
     "conflict": {
         "johnpbloch/wordpress": "<5.3"
