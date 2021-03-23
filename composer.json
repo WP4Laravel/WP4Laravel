@@ -27,7 +27,7 @@
         "laravel/framework": "7.*",
         "jgrossi/corcel": "^4.0",
         "corcel/acf": "^4.0",
-        "laravelium/feed": "^6.0"
+        "laravelium/feed": "^8.0"
     },
     "conflict": {
         "johnpbloch/wordpress": "<5.3"
