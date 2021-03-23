@@ -1,51 +1,53 @@
 # WP4Laravel - A headless Wordpress concept
 
 ## Table of contents
-- [WP4Laravel - A headless Wordpress concept](#wp4laravel---a-headless-wordpress-concept)
-  * [Table of contents](#table-of-contents)
-  * [Supported versions](#supported-versions)
-  * [The concept](#the-concept)
-  * [Dependencies](#dependencies)
-  * [Installation](#installation)
-    + [Gitignore](#gitignore)
-    + [Composer](#composer)
-    + [Environment file.](#environment-file)
-    + [Database config](#database-config)
-    + [Service provider](#service-provider)
-    + [Install Corcel](#install-corcel)
-    + [Publish public data](#publish-public-data)
-    + [Storage](#storage)
-    + [Remove unused migrations](#remove-unused-migrations)
-    + [Install Wordpress](#install-wordpress)
-  * [Basic usage](#basic-usage)
-  * [References](#references)
-  * [Advanced Custom Fields](#advanced-custom-fields)
-  * [Wordpress configuration](#wordpress-configuration)
-  * [Add plugins](#add-plugins)
-    + [How do I use it?](#how-do-i-use-it)
-  * [Multilanguage](#multilanguage)
-    + [Translatable models](#translatable-models)
-    + [Translatable taxonomies](#translatable-taxonomies)
-    + [Making translatable menu's](#making-translatable-menus)
-  * [Best practices](#best-practices)
-    + [Create your own models for each post type](#create-your-own-models-for-each-post-type)
-    + [Register your post types](#register-your-post-types)
-    + [Catch-all your pages](#catch-all-your-pages)
-    + [Setup your homepage](#setup-your-homepage)
-    + [Get the url of a page](#get-the-url-of-a-page)
-    + [Rendering \<picture\> tags](#rendering--tags)
-      - [Usage](#usage)
-      - [Using ImageFake in the styleguide](#using-imagefake-in-the-styleguide)
-    + [Using the MenuBuilder to construct menus](#using-the-menubuilder-to-construct-menus)
-      - [Example usage](#example-usage)
-    + [Translated menu's](#translated-menus)
-    + [Activate WP preview function](#activate-wp-preview-function)
-    + [SEO tags for models](#seo-tags-for-models)
-    + [Hosting assets on S3](#hosting-assets-on-s3)
-      - [Requirements](#requirements)
-      - [Usage](#usage-1)
-    + [RSS-feeds](#rss-feeds)
-      - [Example usage](#example-usage-1)
+- [Table of contents](#table-of-contents)
+- [Supported versions](#supported-versions)
+- [The concept](#the-concept)
+- [Dependencies](#dependencies)
+- [Installation](#installation)
+  * [Gitignore](#gitignore)
+  * [Composer](#composer)
+  * [Environment file.](#environment-file)
+  * [Database config](#database-config)
+  * [Service provider](#service-provider)
+  * [Install Corcel](#install-corcel)
+  * [Publish public data](#publish-public-data)
+  * [Storage](#storage)
+  * [Remove unused migrations](#remove-unused-migrations)
+  * [Install Wordpress](#install-wordpress)
+- [Basic usage](#basic-usage)
+- [References](#references)
+- [Advanced Custom Fields](#advanced-custom-fields)
+- [Wordpress configuration](#wordpress-configuration)
+- [Add plugins](#add-plugins)
+  * [How do I use it?](#how-do-i-use-it)
+- [Yoast Premium](#yoast-premium)
+  * [Redirects](#redirects)
+- [Multilanguage](#multilanguage)
+  * [Translatable models](#translatable-models)
+  * [Translatable taxonomies](#translatable-taxonomies)
+  * [Making translatable menu's](#making-translatable-menus)
+- [Best practices](#best-practices)
+  * [Create your own models for each post type](#create-your-own-models-for-each-post-type)
+  * [Register your post types](#register-your-post-types)
+  * [Catch-all your pages](#catch-all-your-pages)
+  * [Setup your homepage](#setup-your-homepage)
+  * [Get the url of a page](#get-the-url-of-a-page)
+  * [Rendering \ tags](#rendering--tags)
+    + [Configuration](#configuration)
+    + [Usage](#usage)
+    + [Using ImageFake in the styleguide](#using-imagefake-in-the-styleguide)
+  * [Using the MenuBuilder to construct menus](#using-the-menubuilder-to-construct-menus)
+    + [Example usage](#example-usage)
+  * [Translated menu's](#translated-menus)
+  * [Activate WP preview function](#activate-wp-preview-function)
+  * [SEO tags for models](#seo-tags-for-models)
+  * [Hosting assets on S3](#hosting-assets-on-s3)
+    + [Requirements](#requirements)
+    + [Usage](#usage-1)
+  * [RSS-feeds](#rss-feeds)
+    + [Example usage](#example-usage-1)
 
 ## Supported versions
 Only the latest branch of WP4Laravel is supported at any time.
@@ -242,6 +244,22 @@ composer require wpackagist-plugin/advanced-custom-fields
 Plugins are installed to `public/plugins`.
 
 Please visit [WordPress Packagist](https://wpackagist.org) website for more information and examples.
+
+## Yoast Premium
+WP4Laravel has some support for key features of Yoast Premium, mostly rendering SEO tags and following redirects.
+
+### Redirects
+Redirect can enabled by adding the included middleware to the middleware-stack. You probably want to do this in the `web` middleware group in `app/Http/Kernel.php`:
+```php
+protected $middlewareGroups = [
+    'web' => [
+        // ... existing middleware
+        \WP4Laravel\Yoast\Redirects\Middleware::class,
+    ],
+];
+```
+
+The middleware will automatically check if the request should be redirected, and return the redirect instead of handling the original request. Note that the redirect is handled in middleware and takes precedence over any existing routing. Take care not to define redirects over critical pages in your website.
 
 ## Multilanguage
 WP4Laravel contains various options to work with multilanguage-enabled websites. These solutions are based on using the free version of Poylang ([plugin](https://wordpress.org/plugins/polylang/), [wpackagist](https://wpackagist.org/search?q=polylang&type=any&search=)).
@@ -450,7 +468,7 @@ The included configuration file `config/picture.php` can be adapted to your proj
 ```bash
 php artisan vendor:publish --provider="WP4Laravel\WP4LaravelServiceProvider"
 ```
-Note that this will copy the theme files, etc. as well. Change the included options to match your local URL, or the S3-setup. 
+Note that this will copy the theme files, etc. as well. Change the included options to match your local URL, or the S3-setup.
 
 #### Usage
 Crops must be named 'header_desktop_1x', 'header_mobile_2x', 'header_mobile_1x', 'header_mobile_14x' etc. Configure in Wordpress as follows:
