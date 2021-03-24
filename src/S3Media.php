@@ -54,10 +54,14 @@ class S3Media
             || $media instanceof ThumbnailMeta) {
             if ($media = OffloadedMedia::findById($this->media->attachment)) {
                 $this->s3info = $media->getAmazonS3Info();
+            } else {
+                $this->s3info = unserialize($this->media->attachment->meta->amazonS3_info);
             }
         } elseif ($media instanceof Attachment) {
             if ($media = OffloadedMedia::findById($this->media)) {
                 $this->s3info = $media->getAmazonS3Info();
+            } else {
+                $this->s3info = unserialize($this->media->meta->amazonS3_info);
             }
         }
     }
