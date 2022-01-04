@@ -4,8 +4,8 @@ namespace WP4Laravel;
 
 use Corcel\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
-use WP4Laravel\Cache\CachePost;
 
 /**
  * Render an ACF - Flexible Content  attribute from a post
@@ -43,9 +43,11 @@ class Flex
 
     protected function getFieldData($field)
     {
-        return (new CachePost($this->post))->forever("flex_{$field}", function () use ($field) {
+        //	Get the homepage based on the id of the wp_options page_on_front attribute
+        return Cache::rememberForever("flex_{$field}", function () use ($field) {
             return $this->post->acf->flexible_content($field);
         });
+
     }
 
     /**

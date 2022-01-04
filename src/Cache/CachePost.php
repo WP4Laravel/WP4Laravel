@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Cache;
  * Only return the cache if key not exists or the updated time of the post is recent
  *
  * Usage: $test = (new PostCache($post))->remember("my_key", function() { return "my original data"; });
+ * @deprecated No longer used by internal code and not recommended.
 **/
 class CachePost
 {

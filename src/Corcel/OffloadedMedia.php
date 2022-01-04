@@ -3,6 +3,7 @@
 namespace WP4Laravel\Corcel;
 
 use Corcel\Model;
+use Illuminate\Support\Facades\Cache;
 use WP4Laravel\Cache\CachePost;
 
 /**
@@ -31,11 +32,11 @@ class OffloadedMedia extends Model
      */
     public static function findById(Model $media) : ?OffloadedMedia
     {
-        $timestamp = $media->post_modified->timestamp;
 
         // Apply caching based on media post_modified timestamp
-        return (new CachePost($media))->forever("media.offloaded.{$timestamp}", function ($post) {
-            return static::find($post->ID);
+        $timestamp = $media->post_modified->timestamp;
+        return Cache::rememberForever("media.offloaded.{$timestamp}", function () use ($media) {
+            return static::find($media->ID);
         });
     }
 
