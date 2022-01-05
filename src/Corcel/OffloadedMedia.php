@@ -35,7 +35,7 @@ class OffloadedMedia extends Model
 
         // Apply caching based on media post_modified timestamp
         $timestamp = $media->post_modified->timestamp;
-        return Cache::rememberForever("media.offloaded.{$timestamp}", function () use ($media) {
+        return Cache::rememberForever($media->ID."_media.offloaded.{$timestamp}", function () use ($media) {
             return static::find($media->ID);
         });
     }

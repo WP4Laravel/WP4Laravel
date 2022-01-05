@@ -43,8 +43,7 @@ class Flex
 
     protected function getFieldData($field)
     {
-        //	Get the homepage based on the id of the wp_options page_on_front attribute
-        return Cache::rememberForever("flex_{$field}", function () use ($field) {
+        return Cache::rememberForever($this->post->ID."_flex_{$field}", function () use ($field) {
             return $this->post->acf->flexible_content($field);
         });
 
