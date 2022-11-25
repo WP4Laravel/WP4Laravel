@@ -26,7 +26,7 @@
         "aura/autoload": ">2.0",
         "laravel/framework": ">8.0",
         "jgrossi/corcel": ">5.0",
-        "corcel/acf": "*",
+        "corcel/acf": "^4.0",
         "laravel/helpers": ">1.2"
     },
     "conflict": {
