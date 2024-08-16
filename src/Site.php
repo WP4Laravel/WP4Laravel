@@ -2,6 +2,8 @@
 
 namespace WP4Laravel;
 
+use Illuminate\Support\Arr;
+
 class Site
 {
     protected $data = [];
@@ -38,7 +40,7 @@ class Site
     public function get($key, $default = '')
     {
         //  Check on dot notation
-        if ($val = array_get($this->data, $key)) {
+        if ($val = Arr::get($this->data, $key)) {
             return is_array($val) ? collect($val) : $val;
         }
 
@@ -65,7 +67,7 @@ class Site
     {
         if (!is_array($item)) {
             if (str_contains($item, ".")) {
-                array_set($this->data, $item, $value);
+                Arr::set($this->data, $item, $value);
 
                 return $this;
             }
@@ -89,9 +91,9 @@ class Site
     {
         if (!is_array($item)) {
             if (str_contains($item, ".")) {
-                $current = array_get($this->data, $item);
+                $current = Arr::get($this->data, $item);
                 $current[] = $value;
-                array_set($this->data, $item, $current);
+                Arr::set($this->data, $item, $current);
 
                 return $this;
             }
