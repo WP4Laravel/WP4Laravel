@@ -164,7 +164,7 @@ Corcel\Laravel\CorcelServiceProvider::class,
 
 ### Publish public data
 
-Unfortunately, the base theme and config of Wordpress has to be inside the webroot. You can publish these from WP4LaravelServiceProvider.
+Unfortunately, the base theme and config of WordPress has to be inside the webroot. You can publish these from WP4LaravelServiceProvider.
 
 ```bash
 php artisan vendor:publish --provider="WP4Laravel\WP4LaravelServiceProvider"
