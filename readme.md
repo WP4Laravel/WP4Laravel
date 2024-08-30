@@ -75,7 +75,7 @@ The basis of WP4Laravel is just a fresh Laravel install. We add three open sourc
 
 ## Installation
 
-Start a fresh Laravel install: https://laravel.com/docs/9.x/installation
+Start a fresh Laravel install: https://laravel.com/docs/10.x/installation
 
 ### Gitignore
 
