@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.0
+
+Laravel 10 and Corcel 7 are the minimal versions for this package.
+
 ## v1.2.0
 
 Removed the `aura/autoload` dependency. This autoloader was used to load specific dependencies in the WordPress theme. This is no longer needed because conflicts between WordPress, `laravel/helpers` and Laravels `__()` are resolved.
