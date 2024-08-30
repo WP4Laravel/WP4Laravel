@@ -1,29 +1,14 @@
 <?php
 
-// Require the dotenv package using a custom autoloader
-// (composer autoloading doesn't work here, because the laravel helpers conflict with wordpress)
-$vendor = dirname(__DIR__) . '/vendor/';
-require_once $vendor . 'aura/autoload/autoload.php';
-$loader = new \Aura\Autoload\Loader();
-$loader->register();
-$loader->addPrefix('Dotenv', $vendor . 'vlucas/phpdotenv/src');
+// Preload WordPress l10n functions. This is a trick to avoid the "Cannot redeclare __()" error.
+// The function won't be loaded again, because Laravel checks if the function already exists.
+require __DIR__ . '/wp/wp-includes/l10n.php';
 
-function env(string $key, $default = null)
-{
-    $value = getenv($key);
-
-    if ($value === false) {
-        return $default;
-    }
-
-    return $value;
-}
-
-
-/* Register the composer auto loader. */
+/* Register the composer autoloader. */
+require __DIR__.'/../vendor/autoload.php';
 
 /* Detect the environment. */
-(new Dotenv\Dotenv(__DIR__.'/..'))->load();
+Dotenv\Dotenv::createUnsafeImmutable(__DIR__.'/..')->load();
 
 /* MySQL database name. */
 define('DB_NAME', env('DB_DATABASE'));
@@ -111,6 +96,7 @@ $table_prefix = env('WP_PREFIX', 'wp_');
  * in their development environments.
  */
 define('WP_DEBUG', env('APP_DEBUG', false));
+define('WP_DEBUG_LOG', env('APP_DEBUG', false));
 define('WP_DEBUG_DISPLAY', env('APP_DEBUG', false));
 define('SCRIPT_DEBUG', env('APP_DEBUG', false));
 
@@ -124,6 +110,30 @@ if (env('WP_MULTISITE', false)) {
     define('PATH_CURRENT_SITE', env('PATH_CURRENT_SITE', '/'));
     define('SITE_ID_CURRENT_SITE', env('SITE_ID_CURRENT_SITE', 1));
     define('BLOG_ID_CURRENT_SITE', env('BLOG_ID_CURRENT_SITE', 1));
+}
+
+if (env('AWS_ACCESS_KEY_ID') || env('AS3CF_USE_SERVER_ROLES') === "true" || env('AS3CF_USE_SERVER_ROLES') === "1") {
+    define( 'AS3CF_SETTINGS', serialize( array(
+        'provider' => 'aws',
+        // Access Key ID for Storage Provider (aws and do only, replace '*')
+        'access-key-id' => env('AWS_ACCESS_KEY_ID'),
+        // Secret Access Key for Storage Providers (aws and do only, replace '*')
+        'secret-access-key' => env('AWS_SECRET_ACCESS_KEY'),
+        // Use IAM Roles on Amazon Elastic Compute Cloud (EC2) or Google Compute Engine (GCE)
+        'use-server-roles' => env('AS3CF_USE_SERVER_ROLES', false),
+        // Bucket to upload files to
+        'bucket' => env('AWS_BUCKET'),
+        // Bucket region (e.g. 'us-west-1' - leave blank for default region)
+        'region' => env('AWS_DEFAULT_REGION'),
+        // Delivery Provider ('storage', 'aws', 'do', 'gcp', 'cloudflare', 'keycdn', 'stackpath', 'other')
+        'delivery-provider' => 'aws',
+        // Rewrite file URLs to bucket
+        'serve-from-s3' => true,
+        // Use a custom domain (CNAME), not supported when using 'storage' Delivery Provider
+        'enable-delivery-domain' => true,
+        // Custom domain (CNAME), not supported when using 'storage' Delivery Provider
+        'delivery-domain' => str_replace(['https://', 'http://'], '', env('AWS_URL')),
+    )));
 }
 
 /* That's all, stop editing! Happy blogging. */
