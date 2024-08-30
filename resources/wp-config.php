@@ -1,12 +1,11 @@
 <?php
 
-// Require the dotenv package using a custom autoloader
-// (composer autoloading doesn't work here, because the laravel helpers conflict with wordpress)
-$vendor = dirname(__DIR__) . '/vendor/';
-require_once $vendor . 'aura/autoload/autoload.php';
-$loader = new \Aura\Autoload\Loader();
-$loader->register();
-$loader->addPrefix('Dotenv', $vendor . 'vlucas/phpdotenv/src');
+// Preload WordPress l10n functions. This is a trick to avoid the "Cannot redeclare __()" error.
+// The function won't be loaded again, because Laravel checks if the function already exists.
+require __DIR__ . '/wp/wp-includes/l10n.php';
+
+/* Register the composer autoloader. */
+require __DIR__.'/../vendor/autoload.php';
 
 function env(string $key, $default = null)
 {
@@ -20,7 +19,6 @@ function env(string $key, $default = null)
 }
 
 
-/* Register the composer auto loader. */
 
 /* Detect the environment. */
 (new Dotenv\Dotenv(__DIR__.'/..'))->load();
