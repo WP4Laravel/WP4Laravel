@@ -7,21 +7,8 @@ require __DIR__ . '/wp/wp-includes/l10n.php';
 /* Register the composer autoloader. */
 require __DIR__.'/../vendor/autoload.php';
 
-function env(string $key, $default = null)
-{
-    $value = getenv($key);
-
-    if ($value === false) {
-        return $default;
-    }
-
-    return $value;
-}
-
-
-
 /* Detect the environment. */
-(new Dotenv\Dotenv(__DIR__.'/..'))->load();
+Dotenv\Dotenv::createUnsafeImmutable(__DIR__.'/..')->load();
 
 /* MySQL database name. */
 define('DB_NAME', env('DB_DATABASE'));
