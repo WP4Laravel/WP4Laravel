@@ -112,7 +112,7 @@ if (env('WP_MULTISITE', false)) {
     define('BLOG_ID_CURRENT_SITE', env('BLOG_ID_CURRENT_SITE', 1));
 }
 
-if (env('AWS_ACCESS_KEY_ID') || env('AS3CF_USE_SERVER_ROLES') === "true" || env('AS3CF_USE_SERVER_ROLES') === "1") {
+if (env('AWS_ACCESS_KEY_ID') || env('AS3CF_USE_SERVER_ROLES')) {
     define( 'AS3CF_SETTINGS', serialize( array(
         'provider' => 'aws',
         // Access Key ID for Storage Provider (aws and do only, replace '*')
