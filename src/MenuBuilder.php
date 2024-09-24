@@ -114,10 +114,11 @@ class MenuBuilder
         $result = (object)[];
         $result->id = $item->ID;
 
+        $post = $allPosts[$item->meta->_menu_item_object_id] ?? null;
+
         // Use this item's URL, or fallback to the post URL
         $result->url = $item->meta->_menu_item_url;
         if (empty($result->url)) {
-            $post = $allPosts[$item->meta->_menu_item_object_id];
             if (!$post) {
                 throw new Exception('Got menu item that is neither a post nor custom URL');
             }
@@ -132,7 +133,6 @@ class MenuBuilder
         // Use this link's title, or fallback to the post title
         $result->title = $item->post_title;
         if (empty($result->title)) {
-            $post = $allPosts[$item->meta->_menu_item_object_id];
             if ($post) {
                 $result->title = $post->title;
             } else {
