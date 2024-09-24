@@ -14,6 +14,8 @@ use Illuminate\Support\Collection;
  */
 class MenuBuilder
 {
+    private array $cachedSettings = [];
+
     public function __construct(private Request $request)
     {
     }
@@ -38,16 +40,13 @@ class MenuBuilder
      */
     public function menuForLocation(string $location, ?string $language = null) : ?CorcelMenu
     {
+        $settings = $this->getSettings($language);
         if ($language === null) {
-            // Read the basic wordpress theme settings
-            $settings = Option::get('theme_mods_laravel');
             if (!$settings || empty($settings['nav_menu_locations'][$location])) {
                 return null;
             }
             $id = $settings['nav_menu_locations'][$location];
         } else {
-            // Read the translated settings of Polylang
-            $settings = Option::get('polylang');
             if (!$settings || empty($settings['nav_menus']['laravel'][$location][$language])) {
                 return null;
             }
@@ -174,5 +173,22 @@ class MenuBuilder
         });
 
         return Post::whereIn('id', $ids)->without('meta')->get()->keyBy('ID');
+    }
+
+    private function getSettings(?string $language = null)
+    {
+        if (isset($this->cachedSettings[$language])) {
+            return $this->cachedSettings[$language];
+        }
+
+        if ($language === null) {
+            // Read the basic WordPress theme settings
+            $settings = Option::get('theme_mods_laravel');
+        } else {
+            // Read the translated settings of Polylang
+            $settings = Option::get('polylang');
+        }
+
+        return $this->cachedSettings[$language] = $settings;
     }
 }
