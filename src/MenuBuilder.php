@@ -173,6 +173,6 @@ class MenuBuilder
             return $item->meta->_menu_item_object_id;
         });
 
-        return Post::whereIn('id', $ids)->with('meta')->get()->keyBy('ID');
+        return Post::whereIn('id', $ids)->without('meta')->get()->keyBy('ID');
     }
 }
