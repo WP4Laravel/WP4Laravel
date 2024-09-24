@@ -67,9 +67,9 @@ class MenuBuilder
      */
     public function itemsIn(CorcelMenu $menu) : Collection
     {
-        // Get all menu items and related posts, we are going to need those
+        $allItems = $menu->items;
+        // Get all related posts, we are going to need those
         // later (prevents N+1 queries)
-        $allItems = $menu->items()->get();
         $allPosts = $this->getPostsCache($allItems);
 
         $rootItems = $allItems->filter(function ($item) {
