@@ -183,7 +183,7 @@ class MenuBuilder
 
         if ($language === null) {
             // Read the basic WordPress theme settings
-            $settings = Option::get('theme_mods_laravel');
+            $settings = Option::get('theme_mods_wp4laravel');
         } else {
             // Read the translated settings of Polylang
             $settings = Option::get('polylang');
