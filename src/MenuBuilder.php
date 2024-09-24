@@ -8,26 +8,14 @@ use Corcel\Model\Post;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\View\View;
 
 /**
  * Utility class for determining menu contents
  */
 class MenuBuilder
 {
-    /**
-     * Current request to the application
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * Construct the utility class
-     * @param Request $request current request to highlight items
-     */
-    public function __construct(Request $request)
+    public function __construct(private Request $request)
     {
-        $this->request = $request;
     }
 
     /**
@@ -45,7 +33,7 @@ class MenuBuilder
      * Find the appropriate menu to show for a slot. Supports multilanguage menu's
      * based on Polylang
      * @param  string $location nav_menu_location to show
-     * @param  string $language language code, optional
+     * @param  string|null $language language code, optional
      * @return \Corcel\Model\Menu
      */
     public function menuForLocation(string $location, ?string $language = null) : ?CorcelMenu

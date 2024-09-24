@@ -9,7 +9,7 @@ trait Pageurl
 
     /**
      * Get the current page based on a
-     * hierachel structure based on the url
+     * hierarchical structure based on the url
      * @param   string $url
      * @param   boolean $abort
      * @return Page | null
