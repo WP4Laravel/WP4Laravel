@@ -91,10 +91,12 @@ trait Pageurl
     {
         $parts = [$this->slug];
 
-        $parent = $this->parent;
-        while ($parent) {
-            array_unshift($parts, $parent->slug);
-            $parent = $parent->parent;
+        if ($this->post_parent) {
+            $parent = $this->parent;
+            while ($parent) {
+                array_unshift($parts, $parent->slug);
+                $parent = $parent->parent;
+            }
         }
 
         return '/' . implode('/', $parts);
