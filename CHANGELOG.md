@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.1.0
+
+The release is about performance improvements. You should notice a drop in the amount of database queries.
+
+`MenuBuilder::menuForLocation()` has been improved. Ensure your theme name is `wp4laravel`.
+
 ## v2.0.0
 
 Laravel 10 and Corcel 7 are the minimal versions for this package.
