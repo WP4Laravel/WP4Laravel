@@ -8,26 +8,16 @@ use Corcel\Model\Post;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\View\View;
 
 /**
  * Utility class for determining menu contents
  */
 class MenuBuilder
 {
-    /**
-     * Current request to the application
-     * @var Request
-     */
-    private $request;
+    private array $cachedSettings = [];
 
-    /**
-     * Construct the utility class
-     * @param Request $request current request to highlight items
-     */
-    public function __construct(Request $request)
+    public function __construct(private Request $request)
     {
-        $this->request = $request;
     }
 
     /**
@@ -45,21 +35,18 @@ class MenuBuilder
      * Find the appropriate menu to show for a slot. Supports multilanguage menu's
      * based on Polylang
      * @param  string $location nav_menu_location to show
-     * @param  string $language language code, optional
+     * @param  string|null $language language code, optional
      * @return \Corcel\Model\Menu
      */
     public function menuForLocation(string $location, ?string $language = null) : ?CorcelMenu
     {
+        $settings = $this->getSettings($language);
         if ($language === null) {
-            // Read the basic wordpress theme settings
-            $settings = Option::get('theme_mods_laravel');
             if (!$settings || empty($settings['nav_menu_locations'][$location])) {
                 return null;
             }
             $id = $settings['nav_menu_locations'][$location];
         } else {
-            // Read the translated settings of Polylang
-            $settings = Option::get('polylang');
             if (!$settings || empty($settings['nav_menus']['laravel'][$location][$language])) {
                 return null;
             }
@@ -79,9 +66,9 @@ class MenuBuilder
      */
     public function itemsIn(CorcelMenu $menu) : Collection
     {
-        // Get all menu items and related posts, we are going to need those
+        $allItems = $menu->items;
+        // Get all related posts, we are going to need those
         // later (prevents N+1 queries)
-        $allItems = $menu->items()->get();
         $allPosts = $this->getPostsCache($allItems);
 
         $rootItems = $allItems->filter(function ($item) {
@@ -126,10 +113,11 @@ class MenuBuilder
         $result = (object)[];
         $result->id = $item->ID;
 
+        $post = $allPosts[$item->meta->_menu_item_object_id] ?? null;
+
         // Use this item's URL, or fallback to the post URL
         $result->url = $item->meta->_menu_item_url;
         if (empty($result->url)) {
-            $post = $allPosts[$item->meta->_menu_item_object_id];
             if (!$post) {
                 throw new Exception('Got menu item that is neither a post nor custom URL');
             }
@@ -144,7 +132,6 @@ class MenuBuilder
         // Use this link's title, or fallback to the post title
         $result->title = $item->post_title;
         if (empty($result->title)) {
-            $post = $allPosts[$item->meta->_menu_item_object_id];
             if ($post) {
                 $result->title = $post->title;
             } else {
@@ -185,6 +172,23 @@ class MenuBuilder
             return $item->meta->_menu_item_object_id;
         });
 
-        return Post::whereIn('id', $ids)->with('meta')->get()->keyBy('ID');
+        return Post::whereIn('id', $ids)->without('meta')->get()->keyBy('ID');
+    }
+
+    private function getSettings(?string $language = null)
+    {
+        if (isset($this->cachedSettings[$language])) {
+            return $this->cachedSettings[$language];
+        }
+
+        if ($language === null) {
+            // Read the basic WordPress theme settings
+            $settings = Option::get('theme_mods_wp4laravel');
+        } else {
+            // Read the translated settings of Polylang
+            $settings = Option::get('polylang');
+        }
+
+        return $this->cachedSettings[$language] = $settings;
     }
 }

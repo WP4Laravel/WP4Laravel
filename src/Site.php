@@ -18,7 +18,7 @@ class Site
     {
         foreach ($this->data as $key => $value) {
             if ($result = $model->$key) {
-                $this->data[$key] = $model->$key;
+                $this->data[$key] = $result;
             }
         }
 
