@@ -1,4 +1,4 @@
-{{-- Note: see related ViewComposer --}}
+{{-- Note: see related ViewComposer: WP4Laravel\Corcel\Picture --}}
 <picture>
     @foreach ($picture->sources as $source)
         <source srcset="{{ $source->srcset }}" {!! $source->mediaQuery ? 'media="'.$source->mediaQuery.'"' : '' !!} />
