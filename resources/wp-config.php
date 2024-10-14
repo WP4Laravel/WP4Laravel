@@ -114,6 +114,7 @@ if (env('WP_MULTISITE', false)) {
 
 if (env('AWS_ACCESS_KEY_ID') || env('AS3CF_USE_SERVER_ROLES')) {
     define( 'AS3CF_SETTINGS', serialize( array(
+        // Storage Provider ('aws', 'do', 'gcp')
         'provider' => 'aws',
         // Access Key ID for Storage Provider (aws and do only, replace '*')
         'access-key-id' => env('AWS_ACCESS_KEY_ID'),
@@ -125,6 +126,16 @@ if (env('AWS_ACCESS_KEY_ID') || env('AS3CF_USE_SERVER_ROLES')) {
         'bucket' => env('AWS_BUCKET'),
         // Bucket region (e.g. 'us-west-1' - leave blank for default region)
         'region' => env('AWS_DEFAULT_REGION'),
+        // Automatically copy files to bucket on upload
+        'copy-to-s3' => true,
+        // Enable object prefix, useful if you use your bucket for other files
+        'enable-object-prefix' => true,
+        // Object prefix to use if 'enable-object-prefix' is 'true'
+        'object-prefix' => 'storage/',
+        // Organize bucket files into YYYY/MM directories matching Media Library upload date
+        'use-yearmonth-folders' => true,
+        // Append a timestamped folder to path of files offloaded to bucket to avoid filename clashes and bust CDN cache if updated
+        'object-versioning' => true,
         // Delivery Provider ('storage', 'aws', 'do', 'gcp', 'cloudflare', 'keycdn', 'stackpath', 'other')
         'delivery-provider' => 'aws',
         // Rewrite file URLs to bucket
@@ -133,7 +144,20 @@ if (env('AWS_ACCESS_KEY_ID') || env('AS3CF_USE_SERVER_ROLES')) {
         'enable-delivery-domain' => true,
         // Custom domain (CNAME), not supported when using 'storage' Delivery Provider
         'delivery-domain' => str_replace(['https://', 'http://'], '', env('AWS_URL')),
-    )));
+        // Enable signed URLs for Delivery Provider that uses separate key pair (currently only 'aws' supported, a.k.a. CloudFront)
+        'enable-signed-urls' => false,
+        // Access Key ID for signed URLs (aws only, replace '*')
+        'signed-urls-key-id' => '********************',
+        // Key File Path for signed URLs (aws only, absolute file path, not URL)
+        // Make sure hidden from public website, i.e. outside site's document root.
+        'signed-urls-key-file-path' => '/path/to/key/file.pem',
+        // Private Prefix for signed URLs (aws only, relative directory, no wildcards)
+        'signed-urls-object-prefix' => 'private/',
+        // Serve files over HTTPS
+        'force-https' => false,
+        // Remove the local file version once offloaded to bucket
+        'remove-local-file' => false,
+    ) ) );
 }
 
 /* That's all, stop editing! Happy blogging. */
