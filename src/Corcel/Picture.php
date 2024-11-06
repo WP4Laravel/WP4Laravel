@@ -6,6 +6,7 @@ use Corcel\Acf\Field\Image;
 use Corcel\Model\Meta\ThumbnailMeta;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
+use WP4Laravel\ImageFake;
 
 class Picture
 {
@@ -37,7 +38,7 @@ class Picture
         $crops = collect(unserialize($picture->attachment->meta->_wp_attachment_metadata)['sizes']);
 
         $picture->sources = $this->calculateSrcSets($picture, $breakpoints, $crops);
-        if (config('picture.use_aws_storage')) {
+        if (!$picture instanceof ImageFake && config('picture.use_aws_storage')) {
             $crop = app('site')->s3($picture)->url();
         } else {
             $crop = $picture->url ?? $picture->attachment->url ?? null;
@@ -83,7 +84,7 @@ class Picture
                 return preg_match('/^' . preg_quote($crop) . '_[a-z0-9]+$/i', $crop_name);
             })->map(function ($data, $cropname) use ($picture) {
 
-                if (config('picture.use_aws_storage')) {
+                if (!$picture instanceof ImageFake && config('picture.use_aws_storage')) {
                     $url = app('site')->s3($picture)->size($cropname);
                 } else {
                     $crop = $picture->size($cropname);
