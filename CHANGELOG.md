@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.1.1
+
+Fix rendering of `ImageFake` pictures. It tried to get the image size from S3 when `picture.use_aws_storage` was set to `true`. But fake images are not stored in S3.
+
 ## v2.1.0
 
 The release is about performance improvements. You should notice a drop in the amount of database queries.
