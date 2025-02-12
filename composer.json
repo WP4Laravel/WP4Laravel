@@ -23,8 +23,8 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "laravel/framework": "^10.0.0",
-        "jgrossi/corcel": "^7.0.0",
+        "laravel/framework": "^11.0.0",
+        "jgrossi/corcel": "^8.0.0",
         "wp4laravel/corcel-acf": "~0.1.0"
     },
     "conflict": {
