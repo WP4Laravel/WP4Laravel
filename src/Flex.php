@@ -43,7 +43,12 @@ class Flex
 
     protected function getFieldData($field)
     {
-        return Cache::rememberForever($this->post->ID."_flex_{$field}", function () use ($field) {
+        $cacheId = $this->post->ID."_flex_{$field}";
+        if (app()->has('multisite')){
+            $cacheId = app()->make('multisite')->slug . "_" . $cacheId;
+        }
+
+        return Cache::rememberForever($cacheId, function () use ($field) {
             return $this->post->acf->flexible_content($field);
         });
 
